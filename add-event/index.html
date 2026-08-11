@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add your event — RunCalendar</title>
+<meta name="description" content="List your running event on RunCalendar — free, always. Reach runners planning their season in 125 countries.">
+<link rel="canonical" href="https://runcalendar.com/add-event/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RunCalendar">
+<meta property="og:title" content="Add your event — RunCalendar">
+<meta property="og:description" content="List your running event on RunCalendar — free, always. Reach runners planning their season in 125 countries.">
+<meta property="og:url" content="https://runcalendar.com/add-event/">
+<meta property="og:image" content="https://runcalendar.com/assets/og.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/_shared.css">
+</head>
+<body>
+
+<nav><div class="wrap navin">
+  <a class="brand" href="/"><div class="mark"></div>RunCalendar</a>
+  <div class="navlinks"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a class="navcta" href="/#download">Get the app</a></div>
+</div></nav>
+
+<div class="pagehead wrap">
+  <h1>Put your race in front of <span class="g">runners</span></h1>
+  <p class="sub">Listing is <b>free, always</b>. Tell us the basics; we verify every submission against the official site, then your race joins the calendar — honest dates, real distances, and a straight link to your own entry page.</p>
+</div>
+
+<div class="content">
+  <form id="f" novalidate>
+    <label>Event name</label>
+    <input type="text" name="event_name" placeholder="e.g. Marlborough Vines Half Marathon" required>
+
+    <label>Official website</label>
+    <input type="url" name="website" placeholder="https://…" required>
+    <div class="hint">The single most useful thing you can give us — we take dates, distances and entry links from the source.</div>
+
+    <label>Where is it run?</label>
+    <input type="text" name="location" placeholder="City / town and country" required>
+
+    <label>Next race date <span class="opt">— leave blank if not announced yet</span></label>
+    <input type="date" name="race_date">
+    <div class="hint">Not announced is fine — we show provisional timing honestly and confirm when you do.</div>
+
+    <label>Distances on offer</label>
+    <input type="text" name="distances" placeholder="e.g. 42.2 km / 21.1 km / 10 km">
+
+    <label>Your name</label>
+    <input type="text" name="contact_name" required>
+
+    <label>Your email</label>
+    <input type="email" name="contact_email" required>
+    <div class="hint">Only used about this listing — never marketing.</div>
+
+    <label>Anything else we should know? <span class="opt">— optional</span></label>
+    <textarea name="notes" placeholder="Course character, what makes it special, entry opening dates…"></textarea>
+
+    <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off"><!-- honeypot -->
+
+    <button class="submit" type="submit" id="sbtn">Submit my event</button>
+    <div class="formnote" id="ferr" style="display:none; color:#B3261E; font-weight:700;"></div>
+    <div class="formnote">We review every submission by hand — most races are live within a few days, and we'll email you when yours is.</div>
+  </form>
+  <div class="tintcard" id="fok" style="display:none; font-size:16px;">
+    <b>Got it — thank you!</b> Your race is in our review queue. We check every submission against the official site, and we'll email you when it's live in the calendar — usually within a few days.
+  </div>
+
+  <div class="tintcard" style="margin-top:34px;">
+    <b>Already listed?</b> More than 11,000 races are in RunCalendar today — yours may be one of them. <a href="/claim/" style="color:var(--greenDeep); font-weight:800;">Claim your listing</a> to confirm dates at the source and earn the "Confirmed by organiser" badge in the app.
+  </div>
+</div>
+
+<footer><div class="wrap fin">
+  <div>© 2026 RunCalendar · Net Project Limited · Aotearoa New Zealand</div>
+  <div class="flinks"><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+</div></footer>
+
+<script>
+(function(){
+  var SB='https://rteqvslwxgsgvccrgtzg.supabase.co/functions/v1/website-forms';
+  var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0ZXF2c2x3eGdzZ3ZjY3JndHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM2NDExOTUsImV4cCI6MjA1OTIxNzE5NX0.9nS2ATC2p2bfruWNhKylrIPamtYfnb6hTSyv5GC5Ksw';
+  var f=document.getElementById('f'), btn=document.getElementById('sbtn'), err=document.getElementById('ferr');
+  f.addEventListener('submit', async function(e){
+    e.preventDefault(); err.style.display='none';
+    if(!f.reportValidity || f.reportValidity()){
+      btn.disabled=true; btn.textContent='Sending…';
+      var data=Object.fromEntries(new FormData(f).entries()); data.form='add-event';
+      try{
+        var r=await fetch(SB,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+ANON,'apikey':ANON},body:JSON.stringify(data)});
+        var j=await r.json();
+        if(r.ok&&j.ok){ f.style.display='none'; document.getElementById('fok').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); }
+        else{ err.textContent=j.error||'Something went wrong — please try again.'; err.style.display='block'; btn.disabled=false; btn.textContent='Submit my event'; }
+      }catch(_){ err.textContent='Network problem — please try again, or email team@runcalendar.com.'; err.style.display='block'; btn.disabled=false; btn.textContent='Submit my event'; }
+    }
+  });
+})();
+</script>
+</body>
+</html>

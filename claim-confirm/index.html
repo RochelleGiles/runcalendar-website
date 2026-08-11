@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirm your claim — RunCalendar</title>
+<meta name="description" content="Confirm your RunCalendar event claim.">
+<link rel="canonical" href="https://runcalendar.com/claim-confirm/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RunCalendar">
+<meta property="og:title" content="Confirm your claim — RunCalendar">
+<meta property="og:description" content="Confirm your RunCalendar event claim.">
+<meta property="og:url" content="https://runcalendar.com/claim-confirm/">
+<meta property="og:image" content="https://runcalendar.com/assets/og.jpg">
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/_shared.css">
+</head>
+<body>
+
+<nav><div class="wrap navin">
+  <a class="brand" href="/"><div class="mark"></div>RunCalendar</a>
+  <div class="navlinks"><a href="/about/">About</a><a href="/contact/">Contact</a><a class="navcta" href="/#download">Get the app</a></div>
+</div></nav>
+
+<div class="pagehead wrap">
+  <h1 id="h">Confirming<span class="g">…</span></h1>
+  <p class="sub" id="msg">One moment while we confirm your email address.</p>
+</div>
+
+<div class="content">
+  <div class="tintcard" id="okcard" style="display:none; font-size:16px;">
+    <b>Email confirmed — thank you.</b> We'll review your claim (usually within a few days) and email you when it's approved.
+  </div>
+  <div class="card" id="errcard" style="display:none;">
+    <p><b>That link didn't work.</b> It may have been used already, or the address was copied incompletely. If you think something's wrong, email <a href="mailto:team@runcalendar.com" style="color:var(--green); font-weight:700; text-decoration:none;">team@runcalendar.com</a> and we'll sort it out.</p>
+  </div>
+</div>
+
+<footer><div class="wrap fin">
+  <div>© 2026 RunCalendar · Net Project Limited · Aotearoa New Zealand</div>
+  <div class="flinks"><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+</div></footer>
+
+<script>
+(function(){
+  var SB='https://rteqvslwxgsgvccrgtzg.supabase.co/functions/v1/website-forms';
+  var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0ZXF2c2x3eGdzZ3ZjY3JndHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM2NDExOTUsImV4cCI6MjA1OTIxNzE5NX0.9nS2ATC2p2bfruWNhKylrIPamtYfnb6hTSyv5GC5Ksw';
+  var h=document.getElementById('h'), msg=document.getElementById('msg');
+  var token=new URLSearchParams(location.search).get('token');
+  function fail(){ h.innerHTML='Hmm<span class="g">.</span>'; msg.textContent='We couldn\'t confirm this link.'; document.getElementById('errcard').style.display='block'; }
+  if(!token){ fail(); return; }
+  fetch(SB+'?confirm='+encodeURIComponent(token),{headers:{'Authorization':'Bearer '+ANON,'apikey':ANON}})
+    .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+    .then(function(res){
+      if(res.ok&&res.j.ok){ h.innerHTML='Confirmed<span class="g">.</span>'; msg.textContent=res.j.already?'This link was already used — nothing more to do.':'Your email address is verified.'; document.getElementById('okcard').style.display='block'; }
+      else fail();
+    })
+    .catch(fail);
+})();
+</script>
+</body>
+</html>

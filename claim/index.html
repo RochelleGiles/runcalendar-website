@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claim your event — RunCalendar</title>
+<meta name="description" content="Organisers: claim your event's listing on RunCalendar to confirm dates and details at the source, and earn the Confirmed by organiser badge.">
+<link rel="canonical" href="https://runcalendar.com/claim/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RunCalendar">
+<meta property="og:title" content="Claim your event — RunCalendar">
+<meta property="og:description" content="Organisers: claim your event's listing on RunCalendar to confirm dates and details at the source, and earn the Confirmed by organiser badge.">
+<meta property="og:url" content="https://runcalendar.com/claim/">
+<meta property="og:image" content="https://runcalendar.com/assets/og.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/_shared.css">
+</head>
+<body>
+
+<nav><div class="wrap navin">
+  <a class="brand" href="/"><div class="mark"></div>RunCalendar</a>
+  <div class="navlinks"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a class="navcta" href="/#download">Get the app</a></div>
+</div></nav>
+
+<div class="pagehead wrap">
+  <h1>Run this event?<br><span class="g">Claim it.</span></h1>
+  <p class="sub">Claiming your listing keeps it confirmed at the source: your dates, your registration windows, your course — plus the <b>"Confirmed by organiser"</b> badge runners see in the app. Free, like everything else we do for events.</p>
+</div>
+
+<div class="content">
+  <form id="f" novalidate>
+    <input type="hidden" name="event_id" id="event_id">
+    <label>Which event?</label>
+    <input type="text" name="event_name" id="event_name" placeholder="Your event's name as it appears in RunCalendar…" required>
+    <div class="hint">Arriving from the app? This is filled in for you.</div>
+
+    <label>Your name</label>
+    <input type="text" name="claimant_name" required>
+
+    <label>Your role</label>
+    <input type="text" name="role" placeholder="e.g. Race director, event manager, club president" required>
+
+    <label>Work email</label>
+    <input type="email" name="work_email" required>
+    <div class="hint">An address at your event's own domain verifies fastest — one click and you're done. Community races on a general address are absolutely fine too; we just verify by hand.</div>
+
+    <label>Event's official website</label>
+    <input type="url" name="website" required>
+
+    <label>Anything supporting your claim? <span class="opt">— optional</span></label>
+    <textarea name="supporting" placeholder="e.g. you're named on the event's contact page, or the committee email we should check with"></textarea>
+
+    <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off"><!-- honeypot -->
+
+    <button class="submit" type="submit" id="sbtn">Claim my event</button>
+    <div class="formnote" id="ferr" style="display:none; color:#B3261E; font-weight:700;"></div>
+    <div class="formnote">We'll email a confirmation link, then review — most claims are approved within a few days.</div>
+  </form>
+  <div class="tintcard" id="fok" style="display:none; font-size:16px;">
+    <b>Claim received — check your inbox.</b> We've sent a confirmation link to your email address. Click it, and we'll review your claim — you'll hear from us within a few days.
+  </div>
+
+  <h2>What claiming gets you</h2>
+  <p><b>A direct line for the details runners plan around.</b> Confirmed dates the moment you announce them, registration windows, cutoffs, a course file for the elevation profile, and one great photo of your event's real scenery. Everything you send is reviewed and published by us — you never have to learn a dashboard.</p>
+  <p><b>The badge.</b> Claimed events show "Confirmed by organiser" in the app — the strongest trust signal a listing can carry, and runners notice.</p>
+</div>
+
+<footer><div class="wrap fin">
+  <div>© 2026 RunCalendar · Net Project Limited · Aotearoa New Zealand</div>
+  <div class="flinks"><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+</div></footer>
+
+<script>
+(function(){
+  var SB='https://rteqvslwxgsgvccrgtzg.supabase.co/functions/v1/website-forms';
+  var REST='https://rteqvslwxgsgvccrgtzg.supabase.co/rest/v1';
+  var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0ZXF2c2x3eGdzZ3ZjY3JndHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM2NDExOTUsImV4cCI6MjA1OTIxNzE5NX0.9nS2ATC2p2bfruWNhKylrIPamtYfnb6hTSyv5GC5Ksw';
+  var H={'Authorization':'Bearer '+ANON,'apikey':ANON};
+
+  // Arriving from the app: /claim?event=<id> pre-fills the event.
+  var ev=new URLSearchParams(location.search).get('event');
+  if(ev&&/^[0-9a-f-]{36}$/i.test(ev)){
+    document.getElementById('event_id').value=ev;
+    fetch(REST+'/events?id=eq.'+ev+'&select=display_name,name',{headers:H})
+      .then(function(r){return r.json();})
+      .then(function(rows){ if(rows&&rows[0]){ var n=rows[0].display_name||rows[0].name;
+        var inp=document.getElementById('event_name'); inp.value=n; inp.readOnly=true; }})
+      .catch(function(){});
+  }
+
+  var f=document.getElementById('f'), btn=document.getElementById('sbtn'), err=document.getElementById('ferr');
+  f.addEventListener('submit', async function(e){
+    e.preventDefault(); err.style.display='none';
+    if(!f.reportValidity || f.reportValidity()){
+      btn.disabled=true; btn.textContent='Sending…';
+      var data=Object.fromEntries(new FormData(f).entries()); data.form='claim';
+      try{
+        var r=await fetch(SB,{method:'POST',headers:Object.assign({'Content-Type':'application/json'},H),body:JSON.stringify(data)});
+        var j=await r.json();
+        if(r.ok&&j.ok){ f.style.display='none'; document.getElementById('fok').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); }
+        else{ err.textContent=j.error||'Something went wrong — please try again.'; err.style.display='block'; btn.disabled=false; btn.textContent='Claim my event'; }
+      }catch(_){ err.textContent='Network problem — please try again, or email team@runcalendar.com.'; err.style.display='block'; btn.disabled=false; btn.textContent='Claim my event'; }
+    }
+  });
+})();
+</script>
+</body>
+</html>

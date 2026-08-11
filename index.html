@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RunCalendar — Run. Race. Record. Remember. My Goal.</title>
+<meta name="description" content="From the day you find the race to the day you cross the line — the season, the training, the reminders, the memory. 11,000+ races in 125 countries, every one shown from above. Free on iPhone.">
+<link rel="canonical" href="https://runcalendar.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RunCalendar">
+<meta property="og:title" content="RunCalendar — Run. Race. Record. Remember. My Goal.">
+<meta property="og:description" content="One app for the whole journey: 11,000+ races in 125 countries, a season with one gold peak, a training plan that knows your races, and every finish line remembered.">
+<meta property="og:url" content="https://runcalendar.com/">
+<meta property="og:image" content="https://runcalendar.com/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#019669; --greenDeep:#01754F; --greenTint:#E6F4EF;
+    --gold:#C29B3A; --goldText:#8A6D1F; --goldTint:#FBF5E3;
+    --ink:#1C1B18; --body:#3A3A35; --secondary:#55554F; --muted:#6B6B66;
+    --hairline:#E6E6E3; --surface:#F6F6F4; --rowDivider:#F0F0EE;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Schibsted Grotesk',-apple-system,sans-serif; color:var(--ink); background:#fff; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 32px;}
+
+  nav{position:relative; z-index:5;}
+  .navin{display:flex; align-items:center; justify-content:space-between; height:72px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; letter-spacing:-0.02em; color:var(--ink); text-decoration:none;}
+  .mark{width:28px; height:28px; border-radius:8px; background:var(--green); position:relative;}
+  .mark:after{content:""; position:absolute; inset:7px; border:2.5px solid #fff; border-radius:50%; border-bottom-color:transparent; transform:rotate(45deg);}
+  .navlinks{display:flex; gap:24px; align-items:center; font-size:14.5px; font-weight:600; color:var(--secondary);}
+  .navlinks a{color:inherit; text-decoration:none;}
+  .navcta{background:var(--ink); color:#fff !important; font-weight:700; padding:10px 18px; border-radius:99px; font-size:14px;}
+
+  /* ============ PHONE FRAME (shared) ============ */
+  .phone{width:290px; background:#0b0b0a; border-radius:44px; padding:11px; box-shadow:0 30px 70px rgba(28,27,24,.28), 0 6px 18px rgba(28,27,24,.16);}
+  .screen{background:#fff; border-radius:34px; overflow:hidden; position:relative; aspect-ratio:1320/2868;}
+  .screen img{display:block; width:100%; height:100%; object-fit:cover; object-position:top;}
+
+  /* ============ HERO ============ */
+  .hero{position:relative; overflow:hidden; padding:52px 0 88px;
+    background:
+      radial-gradient(ellipse 55% 60% at 8% 0%, var(--greenTint) 0%, rgba(230,244,239,0) 62%),
+      radial-gradient(ellipse 45% 45% at 96% 12%, var(--goldTint) 0%, rgba(251,245,227,0) 60%);}
+  .heroin{display:flex; align-items:center; gap:56px;}
+  .htext{flex:1.15; position:relative; z-index:2;}
+  .kicker{display:inline-block; font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--greenDeep); background:#fff; border:1px solid var(--greenTint); box-shadow:0 2px 10px rgba(1,150,105,.08); padding:8px 15px; border-radius:99px;}
+  .mega{margin-top:26px; font-weight:800; letter-spacing:-0.035em; line-height:1.0; font-size:66px;}
+  .mega .goal{color:var(--green);}
+  .heroSub{font-size:18px; line-height:1.65; color:var(--secondary); max-width:470px; margin-top:22px;}
+  .heroSub b{color:var(--ink);}
+  .ctarow{display:flex; gap:18px; align-items:center; margin-top:30px;}
+  .appstore{display:inline-flex; align-items:center; gap:10px; background:var(--ink); color:#fff; border-radius:13px; padding:11px 20px; text-decoration:none; box-shadow:0 10px 26px rgba(28,27,24,.18);}
+  .appstore .apple{font-size:25px; line-height:1;}
+  .appstore .txt{line-height:1.15; text-align:left;}
+  .appstore .s{font-size:10.5px; opacity:.8;}
+  .appstore .b{font-size:16.5px; font-weight:700;}
+  .freeline{font-size:13.5px; color:var(--muted); font-weight:600;}
+  .statline{margin-top:38px; font-size:14.5px; font-weight:700; color:var(--secondary); display:flex; gap:24px; flex-wrap:wrap;}
+  .statline b{color:var(--ink);} .statline .dot{color:var(--gold);}
+  .hphone{flex:0 0 auto; transform:rotate(3deg); position:relative; z-index:2;}
+
+  /* ============ SATELLITE BAND ============ */
+  .satband{background:var(--ink); color:#fff; padding:88px 0 96px; margin-top:8px; position:relative; overflow:hidden;}
+  .satband:before{content:""; position:absolute; inset:0; opacity:.14;
+    background:radial-gradient(ellipse 40% 50% at 85% 10%, #019669 0%, rgba(1,150,105,0) 60%),
+               radial-gradient(ellipse 35% 45% at 5% 90%, #C29B3A 0%, rgba(194,155,58,0) 55%);}
+  .satin{display:flex; gap:64px; align-items:center; position:relative; z-index:2;}
+  .sattext{flex:1;}
+  .sattext .k{font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#7FD1B5;}
+  .sattext h2{font-size:46px; font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-top:16px;}
+  .sattext h2 .g{color:#7FD1B5;}
+  .sattext p{font-size:17px; line-height:1.7; color:rgba(255,255,255,.72); margin-top:20px; max-width:440px;}
+  .sattext p b{color:#fff;}
+  .satphones{flex:1.1; display:flex; gap:22px; align-items:flex-start;}
+  .satphones .phone{width:250px;}
+  .satphones .p2{transform:translateY(44px) rotate(2deg);}
+  .satphones .p1{transform:rotate(-2deg);}
+  .satnote{margin-top:60px; text-align:center; font-size:13.5px; color:rgba(255,255,255,.45); position:relative; z-index:2;}
+
+  /* ============ JOURNEY ============ */
+  .journey{padding:96px 0 20px;}
+  .sech{font-size:42px; font-weight:800; letter-spacing:-0.03em; text-align:center; line-height:1.1;}
+  .sech .g{color:var(--goldText);}
+  .secsub{text-align:center; color:var(--secondary); font-size:17px; margin-top:14px;}
+  .jrow{display:flex; align-items:center; gap:72px; padding:64px 0;}
+  .jrow.flip{flex-direction:row-reverse;}
+  .jtext{flex:1;}
+  .jnum{font-size:12px; font-weight:800; letter-spacing:.1em; color:var(--goldText); text-transform:uppercase;}
+  .jtext h3{font-size:30px; font-weight:800; letter-spacing:-0.025em; margin-top:10px; line-height:1.15;}
+  .jtext p{font-size:16px; line-height:1.7; color:var(--secondary); margin-top:14px; max-width:430px;}
+  .jtext p b{color:var(--ink);}
+  .jphone{flex:0 0 auto; display:flex; justify-content:center;}
+  .jphone .phone{width:270px;}
+
+  /* ============ PROMISES ============ */
+  .promises{background:var(--surface); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); padding:88px 0; margin-top:60px;}
+  .pgrid{display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; margin-top:48px; max-width:960px; margin-left:auto; margin-right:auto;}
+  .pitem{background:#fff; border:1px solid var(--hairline); border-radius:16px; padding:22px 24px; display:flex; gap:14px; align-items:flex-start;}
+  .pitem .tk{flex:0 0 24px; height:24px; border-radius:50%; background:var(--greenTint); color:var(--greenDeep); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; margin-top:1px;}
+  .pitem .tx{font-size:15px; line-height:1.6; color:var(--secondary);}
+  .pitem .tx b{color:var(--ink); display:block; font-size:16px; margin-bottom:3px; letter-spacing:-0.01em;}
+
+  /* ============ PRICING ============ */
+  .pricing{padding:92px 0 60px; text-align:center;}
+  .prow{display:flex; gap:20px; max-width:720px; margin:46px auto 0;}
+  .pcard{flex:1; border:1px solid var(--hairline); border-radius:22px; padding:38px 28px; background:#fff;}
+  .pcard.gold{border:2px solid var(--gold); background:var(--goldTint);}
+  .pcard .pv{font-size:54px; font-weight:800; letter-spacing:-0.03em;}
+  .pcard.gold .pv{color:var(--goldText);}
+  .pcard .pl{font-size:13px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-top:6px;}
+  .pcard p{font-size:14.5px; line-height:1.65; color:var(--secondary); margin-top:16px;}
+  .honest{margin-top:30px; font-size:15.5px; color:var(--secondary);}
+  .honest b{color:var(--greenDeep);}
+
+  .closer{text-align:center; padding:40px 0 84px;}
+  .closer .mega2{font-size:40px; font-weight:800; letter-spacing:-0.03em; line-height:1.1;}
+  .closer .mega2 .goal{color:var(--green);}
+  .closer .ctarow{justify-content:center;}
+
+  .org{border:1.5px dashed #C2C2BC; border-radius:18px; padding:24px 28px; display:flex; align-items:center; gap:18px; margin:0 auto 76px; max-width:760px;}
+  .org .t{flex:1;}
+  .org h4{font-size:17px; font-weight:800;}
+  .org p{font-size:13.5px; color:var(--muted); margin-top:3px;}
+  .orgbtn{white-space:nowrap; font-weight:700; font-size:14.5px; color:var(--green); text-decoration:none;}
+
+  footer{border-top:1px solid var(--hairline); padding:30px 0 44px;}
+  .fin{display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--muted); flex-wrap:wrap; gap:12px;}
+  .flinks{display:flex; gap:22px;}
+  .flinks a{color:var(--secondary); text-decoration:none; font-weight:600;}
+
+  @media (max-width:960px){
+    .heroin,.satin{flex-direction:column;}
+    .jrow,.jrow.flip{flex-direction:column; gap:40px; padding:48px 0;}
+    .mega{font-size:48px;}
+    .pgrid{grid-template-columns:1fr;}
+    .prow{flex-direction:column;}
+    .satphones{width:100%; justify-content:center;}
+    .hphone{transform:none; margin-top:12px;}
+    .navlinks{gap:14px; font-size:13.5px;}
+  }
+  @media (max-width:720px){
+    .navlinks a:not(.navcta){display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav><div class="wrap navin">
+  <a class="brand" href="/"><div class="mark"></div>RunCalendar</a>
+  <div class="navlinks"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a class="navcta" href="#download">Get the app</a></div>
+</div></nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero"><div class="wrap heroin">
+  <div class="htext">
+    <span class="kicker">Race day is a journey. This is the map.</span>
+    <h1 class="mega">RUN. RACE.<br>RECORD.<br>REMEMBER.<br><span class="goal">MY GOAL.</span></h1>
+    <p class="heroSub">From the day you find the race to the day you cross the line — the season, the training, the reminders, the memory. <b>One app for the whole journey.</b></p>
+    <div class="ctarow">
+      <a class="appstore" href="https://apps.apple.com/app/id6726998429"><span class="apple">&#63743;</span><span class="txt"><span class="s">Download on the</span><br><span class="b">App Store</span></span></a>
+      <span class="freeline">Free on iPhone</span>
+    </div>
+    <div class="statline"><span><b>11,000+</b> races</span><span class="dot">·</span><span><b>125</b> countries</span><span class="dot">·</span><span><b>1</b> gold peak — yours</span></div>
+  </div>
+
+  <div class="hphone"><div class="phone"><div class="screen">
+    <img src="/assets/hero-feed.jpg" alt="RunCalendar's Find a race feed for Australia — the featured Sydney Marathon over its harbour photo, above a calendar of real races" width="1290" height="594">
+  </div></div></div>
+</div></section>
+
+<!-- ================= SATELLITE BAND (the wow) ================= -->
+<section class="satband"><div class="wrap">
+  <div class="satin">
+    <div class="sattext">
+      <span class="k">The view from up here</span>
+      <h2>Every race.<br><span class="g">Seen from above.</span></h2>
+      <p>Open any race and the first thing you see is <b>its real place</b> — satellite imagery of the bay you'll round, the desert you'll cross, the mountains that will keep you company. The actual course country, from space.</p>
+      <p>Eleven thousand races, and every single one shows you where you're going. <b>Pick the view you want to earn.</b></p>
+    </div>
+    <div class="satphones">
+      <div class="phone p1"><div class="screen">
+        <img src="/assets/sat-first-light.jpg" alt="First Light Marathon in RunCalendar — Gisborne's coastline from space above the race's details" width="1290" height="594">
+      </div></div>
+      <div class="phone p2"><div class="screen">
+        <img src="/assets/sat-larapinta.jpg" alt="Run Larapinta Stage Race in RunCalendar — the red MacDonnell Ranges from space above the race's details" width="1290" height="594">
+      </div></div>
+    </div>
+  </div>
+  <div class="satnote">Real Apple Maps satellite imagery — live in the app today.</div>
+</div></section>
+
+<!-- ================= JOURNEY ================= -->
+<section class="journey wrap">
+  <h2 class="sech">Your whole season,<br>in <span class="g">one</span> place</h2>
+  <p class="secsub">Four moments, one thread — the same journey the app walks you through.</p>
+
+  <div class="jrow">
+    <div class="jtext">
+      <div class="jnum">01 · Find</div>
+      <h3>Find the races worth circling</h3>
+      <p>A clean calendar of every race in your country — honest dates, real distances, courses shown from above. Guides on the races worth travelling for, collections to browse when you're dreaming. Travelling? <b>Switch to any of 125 countries.</b></p>
+    </div>
+    <div class="jphone"><div class="phone"><div class="screen">
+      <img src="/assets/find-us-search.jpg" alt="Searching the United States calendar in RunCalendar — Bound for Boston's satellite card leads the results" width="1290" height="594">
+    </div></div></div>
+  </div>
+
+  <div class="jrow flip">
+    <div class="jtext">
+      <div class="jnum">02 · Commit</div>
+      <h3>Pick one gold peak</h3>
+      <p>The race that matters most gets the gold. Everything else finds its place around it — a lead-up that sharpens you, a wildcard for the fun of it, an <b>interested</b> that's allowed to stay a dream. The moment you choose, <b>your season has a shape.</b></p>
+    </div>
+    <div class="jphone"><div class="phone"><div class="screen">
+      <img src="/assets/season.jpg" alt="A RunCalendar season — lead-up races building to the gold Queenstown Marathon peak, wildcards beyond it" width="1290" height="594">
+    </div></div></div>
+  </div>
+
+  <div class="jrow">
+    <div class="jtext">
+      <div class="jnum">03 · Train</div>
+      <h3>Train with a plan that knows your races</h3>
+      <p>Built to your peak and your week — your days, your long-run day, your pace. Lead-up races slot in as the week's hard session. A hilly walk-run still counts. <b>Every session tells you why it's there</b>, and the plan works fully before you grant a single permission.</p>
+    </div>
+    <div class="jphone"><div class="phone"><div class="screen">
+      <img src="/assets/plan.jpg" alt="A RunCalendar training plan — week 1 of a 14-week marathon build with today's session and paces" width="1290" height="594">
+    </div></div></div>
+  </div>
+
+  <div class="jrow flip">
+    <div class="jtext">
+      <div class="jnum">04 · Remember</div>
+      <h3>Every finish line, remembered</h3>
+      <p>Race day disappears fast — the weather, the hurt, the stranger you high-fived at 30k. The log keeps it: your time, your words while they're still true, and one great photo. Years from now, a season of start lines becomes <b>the story of your running.</b></p>
+    </div>
+    <div class="jphone"><div class="phone"><div class="screen">
+      <img src="/assets/memory.jpg" alt="A race memory in RunCalendar — Lake Wakatipu photo over the Queenstown Half Marathon's time and note" width="1290" height="594">
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ================= PROMISES ================= -->
+<section class="promises"><div class="wrap">
+  <h2 class="sech">Built the way runners<br><span class="g">wish it worked</span></h2>
+  <div class="pgrid">
+    <div class="pitem"><span class="tk">✓</span><span class="tx"><b>A season, not a list.</b> One gold peak, and every other race finds its place around it. Your year gets a shape you can feel.</span></div>
+    <div class="pitem"><span class="tk">✓</span><span class="tx"><b>The official entry, every time.</b> One tap to the race's own entry page — the real price, the real spots, nothing in between.</span></div>
+    <div class="pitem"><span class="tk">✓</span><span class="tx"><b>Reminders that matter.</b> Registration opening, closing soon, dates confirming, race week — the quiet stuff that gets you to more start lines.</span></div>
+    <div class="pitem"><span class="tk">✓</span><span class="tx"><b>Private by default.</b> Fully yours before you grant a single permission. Health sync is a bonus you switch on — and everything you log stays yours.</span></div>
+    <div class="pitem"><span class="tk">✓</span><span class="tx"><b>Honest dates.</b> A confirmed date shows its day; a provisional one shows just the month — the app never claims a day it doesn't have.</span></div>
+    <div class="pitem"><span class="tk">✓</span><span class="tx"><b>Guides worth the trip.</b> Course-by-course features on the world's great races, written like a runner talks — where you'll feel it, what to wear, whether it's worth the flight.</span></div>
+  </div>
+</div></section>
+
+<!-- ================= PRICING ================= -->
+<section class="pricing wrap">
+  <h2 class="sech">Honest <span class="g">pricing</span></h2>
+  <div class="prow">
+    <div class="pcard"><div class="pv">$0</div><div class="pl">Forever</div><p>Every race, your whole season, the race log, guides, reminders — and the first four weeks of any training plan.</p></div>
+    <div class="pcard gold"><div class="pv">$9.99</div><div class="pl">Once · when you're hooked</div><p>Opens the rest of your plan, all the way to your peak's start line. One race journey, one small price.</p></div>
+  </div>
+  <p class="honest">That's the whole price. <b>Everything else is yours from the first download.</b></p>
+</section>
+
+<!-- ================= CLOSER ================= -->
+<section class="closer wrap" id="download">
+  <h2 class="mega2">RUN. RACE. RECORD. REMEMBER.<br><span class="goal">MY GOAL.</span></h2>
+  <div class="ctarow" style="margin-top:28px;">
+    <a class="appstore" href="https://apps.apple.com/app/id6726998429"><span class="apple">&#63743;</span><span class="txt"><span class="s">Download on the</span><br><span class="b">App Store</span></span></a>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="org">
+    <div class="t"><h4>Run an event?</h4><p>Claim your listing — confirm dates, add your course and the details runners ask about.</p></div>
+    <a class="orgbtn" href="/claim/">Claim your event ›</a>
+  </div>
+</div>
+
+<footer><div class="wrap fin">
+  <div>© 2026 RunCalendar · Net Project Limited · Aotearoa New Zealand</div>
+  <div class="flinks"><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+</div></footer>
+
+</body>
+</html>
