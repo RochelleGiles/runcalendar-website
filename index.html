@@ -38,7 +38,7 @@
   .navcta{background:var(--ink); color:#fff !important; font-weight:700; padding:10px 18px; border-radius:99px; font-size:14px;}
 
   /* ============ PHONE FRAME (shared) ============ */
-  .phone{width:290px; background:#0b0b0a; border-radius:44px; padding:11px; box-shadow:0 30px 70px rgba(28,27,24,.28), 0 6px 18px rgba(28,27,24,.16);}
+  .phone{width:min(360px, calc(100vw - 72px)); background:#0b0b0a; border-radius:44px; padding:11px; box-shadow:0 30px 70px rgba(28,27,24,.28), 0 6px 18px rgba(28,27,24,.16);}
   .screen{background:#fff; border-radius:34px; overflow:hidden; position:relative; aspect-ratio:1320/2868;}
   .screen img{display:block; width:100%; height:100%; object-fit:cover; object-position:top;}
 
@@ -78,25 +78,25 @@
   .sattext p{font-size:17px; line-height:1.7; color:rgba(255,255,255,.72); margin-top:20px; max-width:440px;}
   .sattext p b{color:#fff;}
   .satphones{flex:1.1; display:flex; gap:22px; align-items:flex-start;}
-  .satphones .phone{width:250px;}
-  .satphones .p2{transform:translateY(44px) rotate(2deg);}
+  .satphones .phone{width:min(300px, 44vw);}
+  .satphones .p2{transform:translateY(52px) rotate(2deg);}
   .satphones .p1{transform:rotate(-2deg);}
   .satnote{margin-top:60px; text-align:center; font-size:13.5px; color:rgba(255,255,255,.45); position:relative; z-index:2;}
 
   /* ============ JOURNEY ============ */
-  .journey{padding:96px 0 20px;}
+  .journey{padding-top:96px; padding-bottom:20px;}
   .sech{font-size:42px; font-weight:800; letter-spacing:-0.03em; text-align:center; line-height:1.1;}
   .sech .g{color:var(--goldText);}
   .secsub{text-align:center; color:var(--secondary); font-size:17px; margin-top:14px;}
-  .jrow{display:flex; align-items:center; gap:72px; padding:64px 0;}
-  .jrow.flip{flex-direction:row-reverse;}
-  .jtext{flex:1;}
+  .jrow{display:flex; align-items:flex-end; gap:56px; margin-top:36px; background:linear-gradient(135deg,#EFF7F3 0%,#FAFAF9 70%); border:1px solid var(--hairline); border-radius:28px; padding:0 56px; overflow:hidden;}
+  .jrow.flip{flex-direction:row-reverse; background:linear-gradient(135deg,#FAF5E8 0%,#FAFAF9 70%);}
+  .jtext{flex:1; align-self:center; padding:56px 0;}
   .jnum{font-size:12px; font-weight:800; letter-spacing:.1em; color:var(--goldText); text-transform:uppercase;}
   .jtext h3{font-size:30px; font-weight:800; letter-spacing:-0.025em; margin-top:10px; line-height:1.15;}
   .jtext p{font-size:16px; line-height:1.7; color:var(--secondary); margin-top:14px; max-width:430px;}
   .jtext p b{color:var(--ink);}
-  .jphone{flex:0 0 auto; display:flex; justify-content:center;}
-  .jphone .phone{width:270px;}
+  .jphone{flex:0 0 auto; display:flex; justify-content:center; margin-top:52px; margin-bottom:-190px;}
+  .jphone .phone{width:min(380px, calc(100vw - 116px));}
 
   /* ============ PROMISES ============ */
   .promises{background:var(--surface); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); padding:88px 0; margin-top:60px;}
@@ -107,7 +107,7 @@
   .pitem .tx b{color:var(--ink); display:block; font-size:16px; margin-bottom:3px; letter-spacing:-0.01em;}
 
   /* ============ PRICING ============ */
-  .pricing{padding:92px 0 60px; text-align:center;}
+  .pricing{padding-top:92px; padding-bottom:60px; text-align:center;}
   .prow{display:flex; gap:20px; max-width:720px; margin:46px auto 0;}
   .pcard{flex:1; border:1px solid var(--hairline); border-radius:22px; padding:38px 28px; background:#fff;}
   .pcard.gold{border:2px solid var(--gold); background:var(--goldTint);}
@@ -118,7 +118,7 @@
   .honest{margin-top:30px; font-size:15.5px; color:var(--secondary);}
   .honest b{color:var(--greenDeep);}
 
-  .closer{text-align:center; padding:40px 0 84px;}
+  .closer{text-align:center; padding-top:40px; padding-bottom:84px;}
   .closer .mega2{font-size:40px; font-weight:800; letter-spacing:-0.03em; line-height:1.1;}
   .closer .mega2 .goal{color:var(--green);}
   .closer .ctarow{justify-content:center;}
@@ -136,7 +136,9 @@
 
   @media (max-width:960px){
     .heroin,.satin{flex-direction:column;}
-    .jrow,.jrow.flip{flex-direction:column; gap:40px; padding:48px 0;}
+    .jrow,.jrow.flip{flex-direction:column; gap:8px; padding:0 24px;}
+    .jtext{padding:40px 0 8px;}
+    .jphone{margin-top:12px; margin-bottom:-34%;}
     .mega{font-size:48px;}
     .pgrid{grid-template-columns:1fr;}
     .prow{flex-direction:column;}
@@ -170,7 +172,7 @@
   </div>
 
   <div class="hphone"><div class="phone"><div class="screen">
-    <img src="/assets/hero-feed.jpg" alt="RunCalendar's Find a race feed for Australia — the featured Sydney Marathon over its harbour photo, above a calendar of real races" width="1290" height="594">
+    <img src="/assets/hero-feed.jpg" alt="RunCalendar's Find a race feed for Australia — the featured Sydney Marathon over its harbour photo, above a calendar of real races" width="760" height="1651">
   </div></div></div>
 </div></section>
 
@@ -185,10 +187,10 @@
     </div>
     <div class="satphones">
       <div class="phone p1"><div class="screen">
-        <img src="/assets/sat-first-light.jpg" alt="First Light Marathon in RunCalendar — Gisborne's coastline from space above the race's details" width="1290" height="594">
+        <img src="/assets/sat-first-light.jpg" alt="First Light Marathon in RunCalendar — Gisborne's coastline from space above the race's details" width="593" height="1290">
       </div></div>
       <div class="phone p2"><div class="screen">
-        <img src="/assets/sat-larapinta.jpg" alt="Run Larapinta Stage Race in RunCalendar — the red MacDonnell Ranges from space above the race's details" width="1290" height="594">
+        <img src="/assets/sat-larapinta.jpg" alt="Run Larapinta Stage Race in RunCalendar — the red MacDonnell Ranges from space above the race's details" width="593" height="1290">
       </div></div>
     </div>
   </div>
@@ -207,7 +209,7 @@
       <p>A clean calendar of every race in your country — honest dates, real distances, courses shown from above. Guides on the races worth travelling for, collections to browse when you're dreaming. Travelling? <b>Switch to any of 125 countries.</b></p>
     </div>
     <div class="jphone"><div class="phone"><div class="screen">
-      <img src="/assets/find-us-search.jpg" alt="Searching the United States calendar in RunCalendar — Bound for Boston's satellite card leads the results" width="1290" height="594">
+      <img src="/assets/find-us-search.jpg" alt="Searching the United States calendar in RunCalendar — Bound for Boston's satellite card leads the results" width="760" height="1651">
     </div></div></div>
   </div>
 
@@ -218,7 +220,7 @@
       <p>The race that matters most gets the gold. Everything else finds its place around it — a lead-up that sharpens you, a wildcard for the fun of it, an <b>interested</b> that's allowed to stay a dream. The moment you choose, <b>your season has a shape.</b></p>
     </div>
     <div class="jphone"><div class="phone"><div class="screen">
-      <img src="/assets/season.jpg" alt="A RunCalendar season — lead-up races building to the gold Queenstown Marathon peak, wildcards beyond it" width="1290" height="594">
+      <img src="/assets/season.jpg" alt="A RunCalendar season — lead-up races building to the gold Queenstown Marathon peak, wildcards beyond it" width="760" height="1651">
     </div></div></div>
   </div>
 
@@ -229,7 +231,7 @@
       <p>Built to your peak and your week — your days, your long-run day, your pace. Lead-up races slot in as the week's hard session. A hilly walk-run still counts. <b>Every session tells you why it's there</b>, and the plan works fully before you grant a single permission.</p>
     </div>
     <div class="jphone"><div class="phone"><div class="screen">
-      <img src="/assets/plan.jpg" alt="A RunCalendar training plan — week 1 of a 14-week marathon build with today's session and paces" width="1290" height="594">
+      <img src="/assets/plan.jpg" alt="A RunCalendar training plan — week 1 of a 14-week marathon build with today's session and paces" width="760" height="1651">
     </div></div></div>
   </div>
 
@@ -240,7 +242,7 @@
       <p>Race day disappears fast — the weather, the hurt, the stranger you high-fived at 30k. The log keeps it: your time, your words while they're still true, and one great photo. Years from now, a season of start lines becomes <b>the story of your running.</b></p>
     </div>
     <div class="jphone"><div class="phone"><div class="screen">
-      <img src="/assets/memory.jpg" alt="A race memory in RunCalendar — Lake Wakatipu photo over the Queenstown Half Marathon's time and note" width="1290" height="594">
+      <img src="/assets/memory.jpg" alt="A race memory in RunCalendar — Lake Wakatipu photo over the Queenstown Half Marathon's time and note" width="760" height="1652">
     </div></div></div>
   </div>
 </section>
