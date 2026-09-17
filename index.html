@@ -118,10 +118,15 @@
   .honest{margin-top:30px; font-size:15.5px; color:var(--secondary);}
   .honest b{color:var(--greenDeep);}
 
-  .closer{text-align:center; padding-top:40px; padding-bottom:84px;}
-  .closer .mega2{font-size:40px; font-weight:800; letter-spacing:-0.03em; line-height:1.1;}
+  .closer{text-align:center; position:relative; margin-top:56px; padding:150px 0 120px; background:#0b2a55 url(/assets/closer-dawn.jpg) center/cover no-repeat; color:#fff; isolation:isolate;}
+  .closer::before{content:""; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0) 35%, rgba(0,0,0,.55) 100%); z-index:-1;}
+  .closer .kick{display:block; font-size:15px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:#fff; opacity:.92; margin-bottom:18px;}
+  .closer .mega2{font-size:44px; font-weight:800; letter-spacing:-0.03em; line-height:1.1; text-shadow:0 2px 18px rgba(0,0,0,.45);}
   .closer .mega2 .goal{color:var(--green);}
   .closer .ctarow{justify-content:center;}
+  .closer .appstore{background:#fff; color:var(--ink); box-shadow:0 10px 26px rgba(0,0,0,.35);}
+  .closer .freeline{color:#fff; opacity:.9;}
+  @media(max-width:720px){ .closer{padding:110px 0 90px; background-position:60% center;} .closer .mega2{font-size:34px;} }
 
   .org{border:1.5px dashed #C2C2BC; border-radius:18px; padding:24px 28px; display:flex; align-items:center; gap:18px; margin:0 auto 76px; max-width:760px;}
   .org .t{flex:1;}
@@ -312,12 +317,14 @@
 </section>
 
 <!-- ================= CLOSER ================= -->
-<section class="closer wrap" id="download">
+<section class="closer" id="download"><div class="wrap">
+  <span class="kick">Your next race, seen from above.</span>
   <h2 class="mega2">RUN. RACE. RECORD. REMEMBER.<br><span class="goal">MY GOAL.</span></h2>
   <div class="ctarow" style="margin-top:28px;">
     <a class="appstore" href="https://apps.apple.com/app/id6726998429"><span class="apple">&#63743;</span><span class="txt"><span class="s">Download on the</span><br><span class="b">App Store</span></span></a>
+    <span class="freeline">Free on iPhone</span>
   </div>
-</section>
+</div></section>
 
 <div class="wrap">
   <div class="org">
