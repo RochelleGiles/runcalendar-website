@@ -73,6 +73,13 @@
   .appstore.big{padding:15px 28px; border-radius:16px; gap:13px;}
   .appstore.big .apple{font-size:34px;} .appstore.big .s{font-size:12.5px;} .appstore.big .b{font-size:22px;}
   .freeline{white-space:nowrap; font-size:13.5px; color:var(--muted); font-weight:600;}
+  /* the icon · badge lockup (28 Sep 2026): the reels' closing signal, on the site; the badge is Apple's official artwork */
+  .ctarow.stack{flex-direction:column; align-items:flex-start; gap:10px;}
+  .lockup{display:flex; align-items:center; gap:14px;}
+  .lockup .icon{width:64px; height:64px; border-radius:14px; display:block; box-shadow:0 0 0 1px rgba(255,255,255,.3), 0 10px 26px rgba(0,0,0,.35);}
+  .lockup a{display:block; line-height:0;}
+  .lockup .badge{height:64px; width:auto; display:block; filter:drop-shadow(0 10px 26px rgba(0,0,0,.35));}
+  .closer .ctarow.stack{align-items:center;} .closer .lockup .badge{height:56px; filter:none;} .closer .lockup .icon{width:56px; height:56px; border-radius:12px; box-shadow:0 0 0 1px var(--hairline);}
   .statline{margin-top:38px; font-size:14.5px; font-weight:700; color:var(--secondary); display:flex; gap:24px; flex-wrap:wrap;}
   .statline b{color:var(--ink);} .statline .dot{color:var(--gold);}
   .statline.top{margin-top:18px; font-size:16px;} .hero .mega{margin-top:14px;}
@@ -184,9 +191,12 @@
     <h1 class="mega">FIND YOUR<br><span class="goal">NEXT RACE.</span></h1>
     <p class="heroSub">Search 14,000+ races across 126 countries and discover where running could take you next. Explore every race in its real-world setting, save the ones that inspire you, and get an alert when entries open.</p>
     <p class="heroOne">Discover. Plan. Run. Remember.</p>
-    <div class="ctarow">
-      <a class="appstore big" href="https://apps.apple.com/app/id6726998429"><span class="apple">&#63743;</span><span class="txt"><span class="s">Download on the</span><br><span class="b">App Store</span></span></a>
-      <span class="freeline">Free on iPhone</span>
+    <div class="ctarow stack">
+      <div class="lockup">
+        <img class="icon" src="/assets/appicon.png" width="64" height="64" alt="RunCalendar app icon">
+        <a href="https://apps.apple.com/app/id6726998429"><img class="badge" src="/assets/appstore-badge-black.svg" width="191" height="64" alt="Download on the App Store"></a>
+      </div>
+      <span class="freeline">Free on iPhone · No account needed</span>
     </div>
   </div>
 
@@ -309,10 +319,14 @@
 <!-- ================= CLOSER ================= -->
 <section class="closer wrap" id="download">
   <h2 class="mega2">RUN. RACE. RECORD. REMEMBER.<br><span class="goal">MY GOAL.</span></h2>
-  <div class="ctarow" style="margin-top:28px;">
-    <a class="appstore" href="https://apps.apple.com/app/id6726998429"><span class="apple">&#63743;</span><span class="txt"><span class="s">Download on the</span><br><span class="b">App Store</span></span></a>
+  <div class="ctarow stack" style="margin-top:28px;">
+    <div class="lockup">
+      <img class="icon" src="/assets/appicon.png" width="56" height="56" alt="RunCalendar app icon">
+      <a href="https://apps.apple.com/app/id6726998429"><img class="badge" src="/assets/appstore-badge-black.svg" width="168" height="56" alt="Download on the App Store"></a>
+    </div>
+    <span class="freeline">Free on iPhone · No account needed</span>
   </div>
-  <p class="priceline">The full training plan is US$9.99, once.</p>
+  <p class="priceline">The full training plan is US$9.99.</p>
 </section>
 
 <div class="wrap">
