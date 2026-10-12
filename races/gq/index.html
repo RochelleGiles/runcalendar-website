@@ -66,7 +66,8 @@
   function render(q){
     if(!idx){out.innerHTML='';return;}
     var words=norm(q).split(/\s+/).filter(Boolean); if(!words.length){out.innerHTML='';out.style.display='none';return;}
-    var hits=[]; for(var i=0;i<idx.length&&hits.length<12;i++){var r=idx[i],h=r[5]; var ok=true; for(var w=0;w<words.length;w++){if(h.indexOf(words[w])<0){ok=false;break;}} if(ok)hits.push(r);}
+    var hits=[]; for(var i=0;i<idx.length;i++){var r=idx[i],h=r[5]; var ok=true; for(var w=0;w<words.length;w++){if(h.indexOf(words[w])<0){ok=false;break;}} if(ok){var nm=norm(r[1]); var sc=0; for(var w2=0;w2<words.length;w2++){if(nm.indexOf(words[w2])<0)sc++;} hits.push([sc,i,r]);}}
+    hits.sort(function(a,b){return a[0]-b[0]||a[1]-b[1];}); hits=hits.slice(0,12).map(function(x){return x[2];});
     if(!hits.length){out.innerHTML='<div class="qnone">Nothing matches yet — try the race name or its town.</div>';out.style.display='block';return;}
     out.innerHTML=hits.map(function(r){return '<a href="/race/'+r[0]+'/"><b>'+r[1]+'</b><span>'+r[3]+' · '+r[2]+(r[4]?' · '+r[4]:'')+'</span></a>';}).join('');
     out.style.display='block';
