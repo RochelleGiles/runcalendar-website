@@ -85,6 +85,36 @@
   .statline.top{margin-top:18px; font-size:16px;} .hero .mega{margin-top:14px;}
   .hphone{flex:0 0 auto; transform:rotate(3deg); position:relative; z-index:2;}
 
+  /* ============ THE RACE CALENDAR BAND (owner, 2026-10-13) ============ */
+  .calband{border-bottom:1px solid var(--hairline); padding:64px 0 60px; background:#fff;}
+  .calin{display:flex; gap:56px; align-items:flex-start;}
+  .caltext{flex:1;}
+  .caltext .k{font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--greenDeep);}
+  .caltext h2{font-size:40px; font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-top:14px;}
+  .caltext h2 .g{color:var(--green);}
+  .caltext p{font-size:17px; line-height:1.65; color:var(--secondary); margin-top:16px; max-width:520px;}
+  .caltext p b{color:var(--ink);}
+  .calsearch{flex:1.1; padding-top:8px;}
+  .srow{display:flex; gap:10px; align-items:stretch;}
+  .srow select, .srow input, .srow button{font-family:inherit; font-size:15.5px; border-radius:13px; border:1px solid var(--hairline);}
+  .srow select{flex:0 0 auto; padding:0 36px 0 14px; font-weight:700; color:var(--ink); background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%2355554F' stroke-width='2'/></svg>") no-repeat right 14px center; -webkit-appearance:none; appearance:none;}
+  .srow input{flex:1; min-width:0; padding:14px 16px; color:var(--ink); background:#fff;}
+  .srow input::placeholder{color:var(--muted);}
+  .srow button{flex:0 0 auto; padding:0 22px; background:var(--green); color:#fff; font-weight:800; border-color:var(--green); cursor:pointer;}
+  .srow select:focus, .srow input:focus{outline:2px solid var(--green); outline-offset:0; border-color:var(--green);}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .chips a{font-size:13.5px; font-weight:700; color:var(--greenDeep); background:var(--greenTint); border-radius:99px; padding:8px 14px; text-decoration:none;}
+  .chips a.all{background:transparent; border:1px solid var(--hairline); color:var(--secondary);}
+  .handback{margin-top:22px; font-size:14.5px; color:var(--muted); line-height:1.5; display:flex; align-items:center; gap:16px;}
+  .handback b{color:var(--ink);}
+  .getapp{flex:0 0 auto; display:inline-flex; align-items:center; gap:9px; background:var(--ink); color:#fff; font-weight:700; padding:7px 18px 7px 8px; border-radius:99px; font-size:14px; text-decoration:none; white-space:nowrap;}
+  .getapp img{width:24px; height:24px; border-radius:7px; display:block; box-shadow:0 0 0 1px rgba(255,255,255,.25);}
+  /* the collections section sits on the surface ground, full width — the wrapper is OUTSIDE the generator's markers */
+  .colwrap{background:var(--surface); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);}
+  .colwrap + .journey{padding-top:80px;}
+  @media (max-width:960px){ .calin{flex-direction:column; gap:28px;} .caltext h2{font-size:32px;} .calband{padding:44px 0 40px;} }
+  @media (max-width:600px){ .srow{flex-wrap:wrap;} .srow select{flex:1 1 100%; padding-top:12px; padding-bottom:12px;} .srow input{flex:1 1 0; padding:12px 14px;} .srow button{padding:12px 18px;} }
+
   /* ============ SATELLITE BAND ============ */
   .satband{background:var(--ink); color:#fff; padding:88px 0 96px; margin-top:8px; position:relative; overflow:hidden;}
   .satband:before{content:""; position:absolute; inset:0; opacity:.14;
@@ -205,6 +235,67 @@
   </div></div></div>
 </div></section>
 
+<!-- ================= THE RACE CALENDAR (owner decision 2026-10-13: the whole calendar is on this site; the stat line and the
+     counts between the markers are refreshed by Tools/website/build_catalogue.py, the rest is hand-written) ================= -->
+<section class="calband"><div class="wrap calin">
+  <div class="caltext">
+    <span class="k">The race calendar</span>
+    <h2>Every race is <span class="g">here.</span></h2>
+    <p><!-- CATALOGUE-STAT:START --><b>14,718 upcoming races in 128 countries</b><!-- CATALOGUE-STAT:END -->, seen from above.</p>
+  </div>
+  <div class="calsearch">
+    <form class="srow" id="calsearch" action="/races/us/" method="get">
+        <select name="cc" aria-label="Country">
+          <option value="us">United States</option>
+          <option value="uk">United Kingdom</option>
+          <option value="au">Australia</option>
+          <option value="za">South Africa</option>
+          <option value="ca">Canada</option>
+          <option value="ie">Ireland</option>
+          <option value="nz">New Zealand</option>
+          <option value="">Every country…</option>
+        </select>
+        <input type="search" name="q" placeholder="Search 7,826 races…" autocomplete="off" aria-label="Search races">
+        <button type="submit">Search</button>
+    </form>
+    <div class="chips">
+      <a href="/races/us/">United States</a><a href="/races/uk/">United Kingdom</a><a href="/races/au/">Australia</a><a href="/races/za/">South Africa</a><a href="/races/ca/">Canada</a><a href="/races/ie/">Ireland</a><a href="/races/nz/">New Zealand</a><a class="all" href="/races/">Every country →</a>
+    </div>
+    <div class="handback"><span>Save a race in the app and <b>we'll tell you the morning entries open.</b></span><a class="getapp" href="#download"><img src="/assets/appicon.png" width="24" height="24" alt="">Get the app</a></div>
+  </div>
+</div></section>
+<script>
+(function(){
+  var counts=/* CATALOGUE-COUNTS:START */{"us":"7,824","uk":"1,467","au":"839","za":"464","ca":"365","ie":"301","nz":"260","":"14,718"}/* CATALOGUE-COUNTS:END */;
+  var f=document.getElementById('calsearch'), s=f.querySelector('select'), i=f.querySelector('input');
+  function ph(){ i.placeholder='Search '+(counts[s.value]||'')+' races…'; } s.addEventListener('change',ph); ph();
+  f.addEventListener('submit',function(e){ e.preventDefault(); var q=i.value.trim(); location.href='/races/'+(s.value?s.value+'/':'')+(q?'?q='+encodeURIComponent(q):''); });
+})();
+</script>
+
+<!-- ================= SATELLITE BAND (the wow) ================= -->
+<section class="satband"><div class="wrap">
+  <div class="satin">
+    <div class="sattext">
+      <span class="k">The view from up here</span>
+      <h2>Every race.<br><span class="g">Seen from above.</span></h2>
+      <p>Every race is shown in <b>its real place</b>, seen from above — the coastline you'll follow, the city you'll run through, the desert you'll cross, the mountains that will keep you company.</p>
+      <p>Open a race and the view opens with it.</p>
+      <p>14,000+ running events. 126 countries. Each one showing you where running could take you next. <b>Pick the view you want to earn.</b></p>
+    </div>
+    <div class="satphones">
+      <div class="phone p1"><div class="screen">
+        <img src="/assets/sat-queenstown.jpg" alt="Queenstown Marathon in RunCalendar — Lake Wakatipu and the Remarkables from space above the race's course and key dates" width="593" height="1289">
+      </div></div>
+      <div class="phone p2"><div class="screen">
+        <img src="/assets/sat-alice.jpg" alt="Alice Springs Running Festival in RunCalendar — the red desert of the MacDonnell Ranges from space above the race's course" width="593" height="1289">
+      </div></div>
+    </div>
+  </div>
+  <div class="satnote">Real Apple Maps satellite imagery — live in the app today.</div>
+</div></section>
+
+<div class="colwrap">
 <!-- COLLECTIONS:START (generated by Tools/website/build_collections.py — do not hand-edit) -->
 <style>
 .colsec{padding:80px 32px 72px}
@@ -231,30 +322,7 @@
   <a class="all" href="/collections/">See all collections, including your country's own ›</a>
 </section>
 <!-- COLLECTIONS:END -->
-
-<!-- ================= SATELLITE BAND (the wow) ================= -->
-<section class="satband"><div class="wrap">
-  <div class="satin">
-    <div class="sattext">
-      <span class="k">The view from up here</span>
-      <h2>Every race.<br><span class="g">Seen from above.</span></h2>
-      <p>Every race is shown in <b>its real place</b>, seen from above — the coastline you'll follow, the city you'll run through, the desert you'll cross, the mountains that will keep you company.</p>
-      <p>Open a race and the view opens with it.</p>
-      <p>14,000+ running events. 126 countries. Each one showing you where running could take you next. <b>Pick the view you want to earn.</b></p>
-    </div>
-    <div class="satphones">
-      <div class="phone p1"><div class="screen">
-        <img src="/assets/sat-queenstown.jpg" alt="Queenstown Marathon in RunCalendar — Lake Wakatipu and the Remarkables from space above the race's course and key dates" width="593" height="1289">
-      </div></div>
-      <div class="phone p2"><div class="screen">
-        <img src="/assets/sat-alice.jpg" alt="Alice Springs Running Festival in RunCalendar — the red desert of the MacDonnell Ranges from space above the race's course" width="593" height="1289">
-      </div></div>
-    </div>
-  </div>
-  <div class="satnote">Real Apple Maps satellite imagery — live in the app today.</div>
-</div></section>
-
-
+</div>
 
 <!-- ================= JOURNEY ================= -->
 <section class="journey wrap">

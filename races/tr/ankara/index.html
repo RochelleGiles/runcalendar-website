@@ -51,7 +51,7 @@
   <div class="t"><h3><a href="/race/runfire-salt-lake-ultra/">Runfire Salt Lake Ultra</a></h3><div class="meta"><b>August 2027</b> · Şereflikoçhisar, Ankara · 160 km · 80 km · 40 km · 20 km · 10 km</div><p class="hook">Ultra distances across Salt Lakes otherworldly white flats</p></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-tr-region">Save</a></div>
 </li><li class="race">
-  <a class="sq" href="/race/runkara-international-half-marathon/"><span class="grad"></span></a>
+  <a class="sq" href="/race/runkara-international-half-marathon/"><img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/94ce5cff-3602-4b32-b3ff-af5b2fb3b678.jpg" alt="" loading="lazy"></a>
   <div class="t"><h3><a href="/race/runkara-international-half-marathon/">Runkara International Half Marathon</a></h3><div class="meta"><b>October 2027</b> · Çankaya, Ankara · Half Marathon · 10 km · 5 km</div></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-tr-region">Save</a></div>
 </li></ul>
@@ -64,7 +64,7 @@
     <a class="btn" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-tr-region">Get RunCalendar</a>
   </div>
 
-  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 12 October 2026.</p>
+  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 13 October 2026.</p>
 </div>
 
 <script>
@@ -83,6 +83,8 @@
   box.addEventListener('input',function(){ var q=box.value; if(!idx){fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(box.value);});} else render(q); });
   document.addEventListener('click',function(ev){ if(!out.contains(ev.target)&&ev.target!==box){out.style.display='none';} });
   box.addEventListener('focus',function(){ if(box.value) render(box.value); });
+  // a search typed on the home page arrives as ?q= and runs on arrival (home-page calendar band, 2026-10-13)
+  var q0=new URLSearchParams(location.search).get('q'); if(q0&&!box.disabled){ box.value=q0; fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(q0);}); }
 })();
 </script>
 

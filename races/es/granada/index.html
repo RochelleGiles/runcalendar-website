@@ -14,7 +14,7 @@
 <meta property="og:title" content="Running races in Granada | RunCalendar">
 <meta property="og:description" content="6 upcoming races across Granada. Every date checked against the organiser. Your next race, seen from above.">
 <meta property="og:url" content="https://runcalendar.com/races/es/granada/">
-<meta property="og:image" content="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/022dcf17-efe0-48ae-b29e-91faecdf0059.jpg">
+<meta property="og:image" content="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/fa6b21d8-2ee0-4dd1-993e-49fcc6f853fc.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/_shared.css">
 <link rel="stylesheet" href="/_catalogue.css">
@@ -29,7 +29,7 @@
 <div class="wrap">
   <div class="crumbs wide"><a href="/races/">Races</a><span>›</span><a href="/races/es/">Spain</a><span>›</span>Granada</div>
   <div class="hubhero">
-    <img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/022dcf17-efe0-48ae-b29e-91faecdf0059.jpg" alt="Granada">
+    <img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/fa6b21d8-2ee0-4dd1-993e-49fcc6f853fc.jpg" alt="Granada">
     <div class="hubhero-in">
       <div class="eyebrow">Race calendar · Granada, Spain</div>
       <h1>Running races in Granada</h1>
@@ -47,7 +47,7 @@
 
 <div class="content wide">
   <div class="label">Coming up <span class="r">in date order</span></div><ul class="races cols"><li class="race">
-  <a class="sq" href="/race/ultra-sierra-nevada/"><span class="grad"></span></a>
+  <a class="sq" href="/race/ultra-sierra-nevada/"><img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/fa6b21d8-2ee0-4dd1-993e-49fcc6f853fc.jpg" alt="" loading="lazy"></a>
   <div class="t"><h3><a href="/race/ultra-sierra-nevada/">Ultra Sierra Nevada</a></h3><div class="meta"><b>Sun 11 Apr 2027</b> · Granada · Ultra · Trail · Trail · Maratón · Media</div><p class="hook">Legendary ultra through rugged Sierra Nevada mountain terrain</p></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-es-region">Save</a></div>
 </li><li class="race">
@@ -80,7 +80,7 @@
     <a class="btn" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-es-region">Get RunCalendar</a>
   </div>
 
-  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 12 October 2026.</p>
+  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 13 October 2026.</p>
 </div>
 
 <script>
@@ -99,6 +99,8 @@
   box.addEventListener('input',function(){ var q=box.value; if(!idx){fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(box.value);});} else render(q); });
   document.addEventListener('click',function(ev){ if(!out.contains(ev.target)&&ev.target!==box){out.style.display='none';} });
   box.addEventListener('focus',function(){ if(box.value) render(box.value); });
+  // a search typed on the home page arrives as ?q= and runs on arrival (home-page calendar band, 2026-10-13)
+  var q0=new URLSearchParams(location.search).get('q'); if(q0&&!box.disabled){ box.value=q0; fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(q0);}); }
 })();
 </script>
 

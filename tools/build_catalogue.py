@@ -279,6 +279,8 @@ SEARCH_JS = """
   box.addEventListener('input',function(){ var q=box.value; if(!idx){fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(box.value);});} else render(q); });
   document.addEventListener('click',function(ev){ if(!out.contains(ev.target)&&ev.target!==box){out.style.display='none';} });
   box.addEventListener('focus',function(){ if(box.value) render(box.value); });
+  // a search typed on the home page arrives as ?q= and runs on arrival (home-page calendar band, 2026-10-13)
+  var q0=new URLSearchParams(location.search).get('q'); if(q0&&!box.disabled){ box.value=q0; fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(q0);}); }
 })();
 </script>
 """
@@ -645,6 +647,22 @@ def main():
             for n in ["sitemap-pages.xml"] + names: f.write(f"<sitemap><loc>{SITE}/{n}</loc><lastmod>{TODAY.isoformat()}</lastmod></sitemap>\n")
             f.write("</sitemapindex>\n")
         print(f"sitemap: {len(static) + len(coll_pages) + len(sitemap_pages)} pages + {len(sitemap_races)} indexable races in {len(names)} chunks", file=sys.stderr)
+
+        # the home page's calendar band (2026-10-13): the stat line and the per-country counts live between markers in
+        # index.html so the nightly rebuild keeps them true; the band itself is hand-written there, never touched here.
+        home = os.path.join(ROOT, "index.html")
+        try:
+            h = open(home, encoding="utf-8").read()
+            stat = f"<b>{total:,} upcoming races in {len(by_country)} countries</b>"
+            counts = {cslug(c): f"{sum(1 for e in by_country[c] if visible_in_lists(e)):,}" for c in MAIN_MARKETS if c in by_country}
+            counts[""] = f"{total:,}"
+            h2 = re.sub(r"(<!-- CATALOGUE-STAT:START -->).*?(<!-- CATALOGUE-STAT:END -->)", lambda m: m.group(1) + stat + m.group(2), h, flags=re.S)
+            h2 = re.sub(r"(/\* CATALOGUE-COUNTS:START \*/).*?(/\* CATALOGUE-COUNTS:END \*/)",
+                        lambda m: m.group(1) + json.dumps(counts, separators=(",", ":")) + m.group(2), h2, flags=re.S)
+            if h2 != h:
+                open(home, "w", encoding="utf-8").write(h2); print("home page: calendar band counts refreshed", file=sys.stderr)
+        except FileNotFoundError:
+            pass
     print(f"wrote {len(written)} pages into {ROOT}", file=sys.stderr)
 
 if __name__ == "__main__":

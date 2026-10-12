@@ -14,7 +14,7 @@
 <meta property="og:title" content="Running races in West Flanders | RunCalendar">
 <meta property="og:description" content="3 upcoming races across West Flanders. Every date checked against the organiser. Your next race, seen from above.">
 <meta property="og:url" content="https://runcalendar.com/races/be/west-flanders/">
-<meta property="og:image" content="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/bbfa8521-91ae-4d0e-8af3-b349aa91a5fa.jpg">
+<meta property="og:image" content="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/5fd8834b-7308-4a54-8a71-7944fe1a1530.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/_shared.css">
 <link rel="stylesheet" href="/_catalogue.css">
@@ -29,14 +29,14 @@
 <div class="wrap">
   <div class="crumbs wide"><a href="/races/">Races</a><span>›</span><a href="/races/be/">Belgium</a><span>›</span>West Flanders</div>
   <div class="hubhero">
-    <img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/bbfa8521-91ae-4d0e-8af3-b349aa91a5fa.jpg" alt="Oostende, West Flanders">
+    <img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/5fd8834b-7308-4a54-8a71-7944fe1a1530.jpg" alt="Brugge, West Flanders">
     <div class="hubhero-in">
       <div class="eyebrow">Race calendar · West Flanders, Belgium</div>
       <h1>Running races in West Flanders</h1>
       <p class="sub">3 upcoming races across West Flanders. Every date checked against the organiser. Your next race, seen from above.</p>
       <div class="search"><input id="q" type="search" placeholder="Search races in Belgium" data-index="/races/be/search.json" autocomplete="off"><div id="qout" class="qout"></div></div>
     </div>
-    <div class="hubhero-cap">Oostende, West Flanders · seen from above</div>
+    <div class="hubhero-cap">Brugge, West Flanders · seen from above</div>
   </div>
   <div class="box">
     <div class="label">Browse by month</div><div class="pills"><a href="/races/be/west-flanders/2027-02/">Feb 2027</a><a href="/races/be/west-flanders/2027-09/">Sep 2027</a><a href="/races/be/west-flanders/2027-10/">Oct 2027</a></div>
@@ -55,7 +55,7 @@
   <div class="t"><h3><a href="/race/nieuwpoort-marathon/">Nieuwpoort Marathon</a></h3><div class="meta"><b>September 2027</b> · Nieuwpoort, West Flanders · Marathon · Half Marathon · 10 km · 5 km · 1 km</div></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-be-region">Save</a></div>
 </li><li class="race">
-  <a class="sq" href="/race/bruges-marathon/"><span class="grad"></span></a>
+  <a class="sq" href="/race/bruges-marathon/"><img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/5fd8834b-7308-4a54-8a71-7944fe1a1530.jpg" alt="" loading="lazy"></a>
   <div class="t"><h3><a href="/race/bruges-marathon/">Bruges Marathon</a></h3><div class="meta"><b>October 2027</b> · Brugge, West Flanders · Marathon · Half Marathon · 8 km</div><p class="hook">Marathon through medieval Bruges cobblestone streets and canals</p></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-be-region">Save</a></div>
 </li></ul>
@@ -68,7 +68,7 @@
     <a class="btn" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-be-region">Get RunCalendar</a>
   </div>
 
-  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 12 October 2026.</p>
+  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 13 October 2026.</p>
 </div>
 
 <script>
@@ -87,6 +87,8 @@
   box.addEventListener('input',function(){ var q=box.value; if(!idx){fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(box.value);});} else render(q); });
   document.addEventListener('click',function(ev){ if(!out.contains(ev.target)&&ev.target!==box){out.style.display='none';} });
   box.addEventListener('focus',function(){ if(box.value) render(box.value); });
+  // a search typed on the home page arrives as ?q= and runs on arrival (home-page calendar band, 2026-10-13)
+  var q0=new URLSearchParams(location.search).get('q'); if(q0&&!box.disabled){ box.value=q0; fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(q0);}); }
 })();
 </script>
 

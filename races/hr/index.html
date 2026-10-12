@@ -75,7 +75,7 @@
   <div class="t"><h3><a href="/race/dalmacija-ultra-trail/">Dalmacija Ultra Trail</a></h3><div class="meta"><b>October 2027</b> · Omiš, Split-Dalmatia · Mountain DUT · Sea DUT · Ethno DUT · River DUT · Easy DUT</div><p class="hook">Five distances along the wild Dalmatian coast of Croatia</p></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-hr-hub">Save</a></div>
 </li><li class="race">
-  <a class="sq" href="/race/zagreb-marathon/"><span class="grad"></span></a>
+  <a class="sq" href="/race/zagreb-marathon/"><img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/24ba59a3-b325-4ea7-bb02-cfc6bf68756a.jpg" alt="" loading="lazy"></a>
   <div class="t"><h3><a href="/race/zagreb-marathon/">Zagreb Marathon</a></h3><div class="meta"><b>October 2027</b> · Zagreb · Marathon · Halfmarathon · GARMIN 10K</div><p class="hook">Marathon through the historic landmarks of Zagreb, Croatia</p></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-hr-hub">Save</a></div>
 </li></ul>
@@ -88,7 +88,7 @@
     <a class="btn" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-hr-hub">Get RunCalendar</a>
   </div>
 
-  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 12 October 2026.</p>
+  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 13 October 2026.</p>
 </div>
 
 <script>
@@ -107,6 +107,8 @@
   box.addEventListener('input',function(){ var q=box.value; if(!idx){fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(box.value);});} else render(q); });
   document.addEventListener('click',function(ev){ if(!out.contains(ev.target)&&ev.target!==box){out.style.display='none';} });
   box.addEventListener('focus',function(){ if(box.value) render(box.value); });
+  // a search typed on the home page arrives as ?q= and runs on arrival (home-page calendar band, 2026-10-13)
+  var q0=new URLSearchParams(location.search).get('q'); if(q0&&!box.disabled){ box.value=q0; fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(q0);}); }
 })();
 </script>
 

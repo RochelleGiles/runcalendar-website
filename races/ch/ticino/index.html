@@ -14,7 +14,7 @@
 <meta property="og:title" content="Running races in Ticino | RunCalendar">
 <meta property="og:description" content="4 upcoming races across Ticino. Every date checked against the organiser. Your next race, seen from above.">
 <meta property="og:url" content="https://runcalendar.com/races/ch/ticino/">
-<meta property="og:image" content="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/1e10dbaf-4213-41ff-9324-8b1ac01cb33a.jpg">
+<meta property="og:image" content="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/ac73f2a1-0766-4f82-b692-16660ef0f427.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/_shared.css">
 <link rel="stylesheet" href="/_catalogue.css">
@@ -29,7 +29,7 @@
 <div class="wrap">
   <div class="crumbs wide"><a href="/races/">Races</a><span>›</span><a href="/races/ch/">Switzerland</a><span>›</span>Ticino</div>
   <div class="hubhero">
-    <img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/1e10dbaf-4213-41ff-9324-8b1ac01cb33a.jpg" alt="Ascona, Ticino">
+    <img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/ac73f2a1-0766-4f82-b692-16660ef0f427.jpg" alt="Ascona, Ticino">
     <div class="hubhero-in">
       <div class="eyebrow">Race calendar · Ticino, Switzerland</div>
       <h1>Running races in Ticino</h1>
@@ -59,7 +59,7 @@
   <div class="t"><h3><a href="/race/stralugano-lugano-half-marathon/">Stralugano Lugano Half Marathon</a></h3><div class="meta"><b>September 2027</b> · Lugano, Ticino · Half Marathon · 19 km · 10 km · 9 km · 5 km · 3 km</div><p class="hook">Along Lake Lugano past the Old Town</p></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-ch-region">Save</a></div>
 </li><li class="race">
-  <a class="sq" href="/race/ascona-locarno-run/"><span class="grad"></span></a>
+  <a class="sq" href="/race/ascona-locarno-run/"><img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/ac73f2a1-0766-4f82-b692-16660ef0f427.jpg" alt="" loading="lazy"></a>
   <div class="t"><h3><a href="/race/ascona-locarno-run/">Ascona Locarno Run</a></h3><div class="meta"><b>October 2027</b> · Ascona, Ticino · Half Marathon · 10K · 5K</div><p class="hook">Lakeside race along the shores of Lake Maggiore</p></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-ch-region">Save</a></div>
 </li></ul>
@@ -72,7 +72,7 @@
     <a class="btn" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-ch-region">Get RunCalendar</a>
   </div>
 
-  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 12 October 2026.</p>
+  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 13 October 2026.</p>
 </div>
 
 <script>
@@ -91,6 +91,8 @@
   box.addEventListener('input',function(){ var q=box.value; if(!idx){fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(box.value);});} else render(q); });
   document.addEventListener('click',function(ev){ if(!out.contains(ev.target)&&ev.target!==box){out.style.display='none';} });
   box.addEventListener('focus',function(){ if(box.value) render(box.value); });
+  // a search typed on the home page arrives as ?q= and runs on arrival (home-page calendar band, 2026-10-13)
+  var q0=new URLSearchParams(location.search).get('q'); if(q0&&!box.disabled){ box.value=q0; fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(q0);}); }
 })();
 </script>
 

@@ -71,7 +71,7 @@
   <div class="t"><h3><a href="/race/shibamata-100k/">Shibamata 100K</a></h3><div class="meta"><b>June 2027</b> · Tokyo · 100km · 60km</div><p class="hook">Flat out-and-back along the Edogawa River floodplain</p></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-jp-region">Save</a></div>
 </li><li class="race">
-  <a class="sq" href="/race/hasetsune-cup/"><span class="grad"></span></a>
+  <a class="sq" href="/race/hasetsune-cup/"><img src="https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/3b0a3ee8-197f-47ff-a1f8-a900713d52cd.jpg" alt="" loading="lazy"></a>
   <div class="t"><h3><a href="/race/hasetsune-cup/">Hasetsune Cup</a></h3><div class="meta"><b>October 2027</b> · Akiruno, Tokyo · 71.5km</div><p class="hook">The overnight trail race that launched Japan&#x27;s ultra scene</p></div>
   <div class="acts"><a class="save" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-jp-region">Save</a></div>
 </li></ul>
@@ -84,7 +84,7 @@
     <a class="btn" href="https://apps.apple.com/app/apple-store/id6726998429?pt=2876806&mt=8&ct=web-jp-region">Get RunCalendar</a>
   </div>
 
-  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 12 October 2026.</p>
+  <p class="fine">Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. A confirmed date shows its day; a provisional one shows only its month. Last updated 13 October 2026.</p>
 </div>
 
 <script>
@@ -103,6 +103,8 @@
   box.addEventListener('input',function(){ var q=box.value; if(!idx){fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(box.value);});} else render(q); });
   document.addEventListener('click',function(ev){ if(!out.contains(ev.target)&&ev.target!==box){out.style.display='none';} });
   box.addEventListener('focus',function(){ if(box.value) render(box.value); });
+  // a search typed on the home page arrives as ?q= and runs on arrival (home-page calendar band, 2026-10-13)
+  var q0=new URLSearchParams(location.search).get('q'); if(q0&&!box.disabled){ box.value=q0; fetch(src).then(function(r){return r.json();}).then(function(j){idx=j;render(q0);}); }
 })();
 </script>
 
