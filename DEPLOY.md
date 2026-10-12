@@ -46,3 +46,30 @@ This repository is the complete runcalendar.com website — plain HTML/CSS,
 Any questions: rochelle@evento.co.nz — the site was built and verified
 11 Aug 2026; every page and asset returns 200 and the forms are live-wired
 to the existing Supabase backend (no configuration needed on the DO side).
+
+## The catalogue (added 12 Oct 2026)
+
+`/races/…` (world → country → region → month hubs) and `/race/<slug>/` (one page per
+upcoming race, ~15,000) are **generated**, never hand-edited:
+
+- Generators live in the app repo at `Tools/website/` and are copied into this
+  repository's `tools/` on every sync. `build_collections.py` runs first, then
+  `build_catalogue.py --out .` (it owns `/race/`, `sitemap.xml` and the
+  `sitemap-*.xml` chunks, `/races/<cc>/search.json` and `_catalogue.css`).
+- **Nightly rebuild**: `.github/workflows/nightly.yml` runs both generators at
+  14:30 UTC, commits whatever changed and pushes — DigitalOcean deploys as it
+  does for a hand push. No secrets: it reads the public API only.
+- **Satellite frames** come from the public `web-assets` bucket
+  (`sat/<event_id>.jpg`, a 1280×800 progressive JPEG re-encoded from Apple's
+  1.8 MB PNG, + `sat/manifest.json`, a JSON list of the event ids held), written by
+  `Tools/website/fetch_snapshots.py` run on Rochelle's Mac with the Apple Maps
+  key and the Supabase service key in `~/Documents/RunCalendarSecrets/maps.env`
+  (never in any repo). New races get the brand gradient until the next frame run
+  — run it after the morning list once a week or so.
+- The app repo does NOT track the generated pages (`website/races/`,
+  `website/race/`, `website/sitemap*.xml`, `website/_catalogue.css` are
+  git-ignored there). Hand-made pages still flow app repo → here by rsync;
+  never rsync with `--delete` across the generated directories.
+- Design reference: `Design/web_catalogue_mock` in the app repo (owner-approved
+  12 Oct 2026): satellite hero + grey box on every hub, two-column calendar,
+  race page = the app's Event Detail with the organiser link last.
