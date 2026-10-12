@@ -41,6 +41,9 @@ HERO = {"US": "130th-boston-marathon", "GB": "london-marathon", "AU": "sydney-ma
         "CA": "2026-bmo-vancouver-marathon-international", "IE": "dublin-marathon", "NZ": "queenstown-marathon",
         "FR": "paris-marathon", "DE": "bmw-berlin-marathon", "JP": "tokyo-marathon", "ES": "valencia-marathon", "IT": "run-rome-the-marathon", "IN": "tata-mumbai-marathon"}
 MAIN_MARKETS = ["US", "GB", "AU", "ZA", "CA", "IE", "NZ"]
+# countries whose name takes "the" in a sentence ("races in the United States")
+THE = {"US", "GB", "NL", "PH", "AE", "CZ", "DO", "BS", "MV", "GM", "CD", "CF", "KM", "SC", "MH", "SB", "VG", "VI", "KY", "TC", "FO", "IM"}
+def in_country(code, name): return ("the " + name) if code in THE else name
 US_ADJ = {"Alabama":["Florida","Georgia","Mississippi","Tennessee"],"Alaska":[],"Arizona":["California","Colorado","Nevada","New Mexico","Utah"],"Arkansas":["Louisiana","Mississippi","Missouri","Oklahoma","Tennessee","Texas"],"California":["Arizona","Nevada","Oregon"],"Colorado":["Arizona","Kansas","Nebraska","New Mexico","Oklahoma","Utah","Wyoming"],"Connecticut":["Massachusetts","New York","Rhode Island"],"Delaware":["Maryland","New Jersey","Pennsylvania"],"District of Columbia":["Maryland","Virginia"],"Florida":["Alabama","Georgia"],"Georgia":["Alabama","Florida","North Carolina","South Carolina","Tennessee"],"Hawaii":[],"Idaho":["Montana","Nevada","Oregon","Utah","Washington","Wyoming"],"Illinois":["Indiana","Iowa","Kentucky","Missouri","Wisconsin"],"Indiana":["Illinois","Kentucky","Michigan","Ohio"],"Iowa":["Illinois","Minnesota","Missouri","Nebraska","South Dakota","Wisconsin"],"Kansas":["Colorado","Missouri","Nebraska","Oklahoma"],"Kentucky":["Illinois","Indiana","Missouri","Ohio","Tennessee","Virginia","West Virginia"],"Louisiana":["Arkansas","Mississippi","Texas"],"Maine":["New Hampshire"],"Maryland":["Delaware","District of Columbia","Pennsylvania","Virginia","West Virginia"],"Massachusetts":["Connecticut","New Hampshire","New York","Rhode Island","Vermont"],"Michigan":["Indiana","Ohio","Wisconsin"],"Minnesota":["Iowa","North Dakota","South Dakota","Wisconsin"],"Mississippi":["Alabama","Arkansas","Louisiana","Tennessee"],"Missouri":["Arkansas","Illinois","Iowa","Kansas","Kentucky","Nebraska","Oklahoma","Tennessee"],"Montana":["Idaho","North Dakota","South Dakota","Wyoming"],"Nebraska":["Colorado","Iowa","Kansas","Missouri","South Dakota","Wyoming"],"Nevada":["Arizona","California","Idaho","Oregon","Utah"],"New Hampshire":["Maine","Massachusetts","Vermont"],"New Jersey":["Delaware","New York","Pennsylvania"],"New Mexico":["Arizona","Colorado","Oklahoma","Texas","Utah"],"New York":["Connecticut","Massachusetts","New Jersey","Pennsylvania","Vermont"],"North Carolina":["Georgia","South Carolina","Tennessee","Virginia"],"North Dakota":["Minnesota","Montana","South Dakota"],"Ohio":["Indiana","Kentucky","Michigan","Pennsylvania","West Virginia"],"Oklahoma":["Arkansas","Colorado","Kansas","Missouri","New Mexico","Texas"],"Oregon":["California","Idaho","Nevada","Washington"],"Pennsylvania":["Delaware","Maryland","New Jersey","New York","Ohio","West Virginia"],"Rhode Island":["Connecticut","Massachusetts"],"South Carolina":["Georgia","North Carolina"],"South Dakota":["Iowa","Minnesota","Montana","Nebraska","North Dakota","Wyoming"],"Tennessee":["Alabama","Arkansas","Georgia","Kentucky","Mississippi","Missouri","North Carolina","Virginia"],"Texas":["Arkansas","Louisiana","New Mexico","Oklahoma"],"Utah":["Arizona","Colorado","Idaho","Nevada","New Mexico","Wyoming"],"Vermont":["Massachusetts","New Hampshire","New York"],"Virginia":["District of Columbia","Kentucky","Maryland","North Carolina","Tennessee","West Virginia"],"Washington":["Idaho","Oregon"],"West Virginia":["Kentucky","Maryland","Ohio","Pennsylvania","Virginia"],"Wisconsin":["Illinois","Iowa","Michigan","Minnesota"],"Wyoming":["Colorado","Idaho","Montana","Nebraska","South Dakota","Utah"]}
 
 # ---------------------------------------------------------------- fetch
@@ -82,8 +85,10 @@ def fetch_collections():
 
 def fetch_manifest():
     try:
-        req = urllib.request.Request(MANIFEST + "?t=" + TODAY.isoformat())
-        return json.loads(urllib.request.urlopen(req, timeout=60).read())
+        req = urllib.request.Request(MANIFEST + "?t=" + str(datetime.datetime.now().timestamp()))
+        raw = json.loads(urllib.request.urlopen(req, timeout=60).read())
+        # a JSON list of event ids (the fetcher's format since 12 Oct); an older dict of id → url still works
+        return {i: BUCKET + "/web-assets/sat/" + i + ".jpg" for i in raw} if isinstance(raw, list) else raw
     except Exception as e:
         print("no satellite manifest yet:", e, file=sys.stderr); return {}
 
@@ -521,7 +526,7 @@ def main():
 
     for code in codes:
         if ONLY and code not in ONLY: continue
-        evs = by_country[code]; cname = country_name[code]; cc = cslug(code); lang = lang_of(code)
+        evs = by_country[code]; cname = country_name[code]; cc = cslug(code); lang = lang_of(code); cin = in_country(code, cname)
         listed = [e for e in evs if visible_in_lists(e)]
         token = f"web-{cc}-hub"
         # hero: owner's chosen race, else the first core race, else the first race
@@ -542,20 +547,22 @@ def main():
         for e in listed:
             if e.get("state_name"): by_region[e["state_name"]].append(e)
         regions = sorted(by_region)
-        region_links = [(r, f"/races/{cc}/{slugify(r)}/") for r in regions] if len(regions) >= 2 else []
+        # the hub lists regions with a real calendar (3+); a one-race oddity still gets its (noindex) page but no slot in the box
+        listed_regions = [r for r in regions if len(by_region[r]) >= 3]
+        region_links = [(r, f"/races/{cc}/{slugify(r)}/") for r in listed_regions] if len(listed_regions) >= 2 else []
         coming = "".join(row(e, token, manifest) for e in listed[:COMING_UP])
-        see_all = (f"See all {len(listed):,} races in {cname} by month ›", f"/races/{cc}/{months[0]}/") if months else None
+        see_all = (f"See all {len(listed):,} races in {cin} by month ›", f"/races/{cc}/{months[0]}/") if months else None
         sub = f"{len(listed):,} upcoming races, from the big city starts to your own town's. Every date checked against the organiser. {TAGLINE}"
-        cols_html = collection_cards(cols, code, {"name": cname})
-        hub_page(f"/races/{cc}/", f'<a href="/races/">Races</a><span>›</span>{esc(cname)}', f"Race calendar · {esc(cname)}", f"Running races in {cname}", sub,
-                 f"Search {len(listed):,} races in {cname}", idx_path, hero_img, hero_cap, month_links, region_links, None, coming, see_all, token, cols_html, lang)
+        cols_html = collection_cards(cols, code, {"name": cin})
+        hub_page(f"/races/{cc}/", f'<a href="/races/">Races</a><span>›</span>{esc(cname)}', f"Race calendar · {esc(cname)}", f"Running races in {cin}", sub,
+                 f"Search {len(listed):,} races in {cin}", idx_path, hero_img, hero_cap, month_links, region_links, None, coming, see_all, token, cols_html, lang)
         sitemap_pages.append(f"/races/{cc}/")
         # month pages
         for m in months:
             rows = [row(e, f"web-{cc}-month", manifest) for e in listed if month_key(e["next_event_date"]) == m]
             mlabel = month_label(m, True)
             list_page(f"/races/{cc}/{m}/", f'<a href="/races/">Races</a><span>›</span><a href="/races/{cc}/">{esc(cname)}</a><span>›</span>{esc(mlabel)}',
-                      f"Race calendar · {esc(cname)}", f"Running races in {cname} in {mlabel}", f"{len(rows)} races across {cname} in {mlabel}. Every date checked against the organiser. {TAGLINE}",
+                      f"Race calendar · {esc(cname)}", f"Running races in {cin} in {mlabel}", f"{len(rows)} races across {cin} in {mlabel}. Every date checked against the organiser. {TAGLINE}",
                       rows, f"web-{cc}-month", lang, [(f"← {cname}", f"/races/{cc}/")] + [(month_label(x), f"/races/{cc}/{x}/") for x in months if x != m])
             sitemap_pages.append(f"/races/{cc}/{m}/")
         # region hubs + region months
@@ -570,7 +577,7 @@ def main():
             rsee = (f"See all {len(revs):,} races in {r} by month ›", f"/races/{cc}/{rs}/{rmonths[0]}/") if rmonths else None
             rsub = f"{len(revs):,} upcoming races across {r}. Every date checked against the organiser. {TAGLINE}"
             hub_page(f"/races/{cc}/{rs}/", f'<a href="/races/">Races</a><span>›</span><a href="/races/{cc}/">{esc(cname)}</a><span>›</span>{esc(r)}',
-                     f"Race calendar · {esc(r)}, {esc(cname)}", f"Running races in {r}", rsub, f"Search races in {cname}", idx_path,
+                     f"Race calendar · {esc(r)}, {esc(cname)}", f"Running races in {r}", rsub, f"Search races in {cin}", idx_path,
                      frame(manifest, rhero), place_short(rhero) or r, rmonth_links, None, nearby, rcoming, rsee, rtoken, cols_html, lang, noindex=len(revs) < 3)
             if len(revs) >= 3: sitemap_pages.append(f"/races/{cc}/{rs}/")
             for m in rmonths:
