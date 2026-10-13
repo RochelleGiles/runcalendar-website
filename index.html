@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RunCalendar — Find your next race, seen from above</title>
 <meta name="google-site-verification" content="miFfyh4qo7LNQFOH6Snp7kBwK04-bMKNyaya9gQVEoQ" />
-<meta name="description" content="Find your next race: search 14,000+ races across 126 countries, explore every race in its real-world setting, save the ones that inspire you, and get an alert when entries open. Free on iPhone.">
+<meta name="description" content="Find your next race: search 14,000+ races across 128 countries, explore every race in its real-world setting, save the ones that inspire you, and get an alert when entries open. Free on iPhone.">
 <link rel="canonical" href="https://runcalendar.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RunCalendar">
 <meta property="og:title" content="RunCalendar — Find your next race, seen from above">
-<meta property="og:description" content="One app for the whole journey: 14,000+ races in 126 countries, a season with one gold peak, a training plan that knows your races, and every finish line remembered.">
+<meta property="og:description" content="One app for the whole journey: 14,000+ races in 128 countries, a season with one gold peak, a training plan that knows your races, and every finish line remembered.">
 <meta property="og:url" content="https://runcalendar.com/">
 <meta property="og:image" content="https://runcalendar.com/assets/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -94,17 +94,18 @@
   .caltext h2 .g{color:var(--green);}
   .caltext p{font-size:17px; line-height:1.65; color:var(--secondary); margin-top:16px; max-width:520px;}
   .caltext p b{color:var(--ink);}
-  .calsearch{flex:1.1; padding-top:8px;}
-  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
-  .chips a{font-size:13.5px; font-weight:700; color:var(--greenDeep); background:var(--greenTint); border-radius:99px; padding:8px 14px; text-decoration:none;}
-  .chips a.all{background:transparent; border:1px solid var(--hairline); color:var(--secondary);}
-  .handback{margin-top:22px; font-size:14.5px; color:var(--muted); line-height:1.5; display:flex; align-items:center; gap:16px;}
-  .handback b{color:var(--ink);}
-  .getapp{flex:0 0 auto; display:inline-flex; align-items:center; gap:9px; background:var(--ink); color:#fff; font-weight:700; padding:7px 18px 7px 8px; border-radius:99px; font-size:14px; text-decoration:none; white-space:nowrap;}
-  .getapp img{width:24px; height:24px; border-radius:7px; display:block; box-shadow:0 0 0 1px rgba(255,255,255,.25);}
+  .caltext .countries{margin-top:18px; font-size:14.5px; font-weight:700; color:var(--greenDeep); line-height:1.9; max-width:520px;}
+  .caltext .countries a{color:inherit; text-decoration:none; white-space:nowrap;} .caltext .countries .sep{color:var(--disabled); margin:0 3px; font-weight:400;}
+  .caltext .countries a.all{color:var(--secondary);}
+  .caltext .handback{margin-top:26px; font-size:14.5px; color:var(--muted); line-height:1.5; max-width:520px;}
+  .caltext .handback b{color:var(--ink);}
+  /* the CTA is the site's icon · badge lockup (28 Sep 2026), a size down, with the free line beside it */
+  .caltext .cta{margin-top:14px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+  .caltext .lockup{gap:12px;}
+  .caltext .lockup .icon{width:48px; height:48px; border-radius:11px; box-shadow:0 0 0 1px var(--hairline);}
+  .caltext .lockup .badge{height:48px; width:auto; filter:none;}
+  .caltext .freeline{white-space:normal;}
   .calin{align-items:center;}
-  .caltext .chips{margin-top:22px;}
-  .caltext .handback{margin-top:24px; max-width:520px;}
   /* the satellite card (owner, 13 Oct 2026): the world hub's hero in miniature — its words, its search, a frame from the bucket */
   .calcard{flex:0 0 46%; position:relative; isolation:isolate; border-radius:22px; overflow:hidden; min-height:340px; padding:30px 30px 26px; color:#fff; display:flex; flex-direction:column; justify-content:flex-end;
     background:#0b1a12 left bottom/cover no-repeat; box-shadow:0 20px 50px rgba(28,27,24,.18);}
@@ -121,7 +122,7 @@
   /* the collections section sits on the surface ground, full width — the wrapper is OUTSIDE the generator's markers */
   .colwrap{background:var(--surface); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);}
   .colwrap + .journey{padding-top:80px;}
-  @media (max-width:960px){ .calin{flex-direction:column; gap:28px; align-items:stretch;} .caltext h2{font-size:32px;} .calband{padding:44px 0 40px;} .calcard{flex:0 0 auto; width:100%; min-height:300px;} .caltext .handback{max-width:none;} }
+  @media (max-width:960px){ .calin{flex-direction:column; gap:28px; align-items:stretch;} .caltext h2{font-size:32px;} .calband{padding:44px 0 40px;} .calcard{flex:0 0 auto; width:100%; min-height:300px;} .caltext .handback, .caltext .countries{max-width:none;} }
 
   /* ============ SATELLITE BAND ============ */
   .satband{background:var(--ink); color:#fff; padding:88px 0 96px; margin-top:8px; position:relative; overflow:hidden;}
@@ -225,9 +226,9 @@
 <section class="hero"><div class="wrap heroin">
   <div class="htext">
     <span class="kicker">Your next race, seen from above.</span>
-    <div class="statline top"><span><b>14,000+</b> races</span><span class="dot">·</span><span><b>126</b> countries</span></div>
+    <div class="statline top"><span><b><!-- CATALOGUE-ROUND:START -->14,700+<!-- CATALOGUE-ROUND:END --></b> races</span><span class="dot">·</span><span><b><!-- CATALOGUE-NC:START -->128<!-- CATALOGUE-NC:END --></b> countries</span></div>
     <h1 class="mega">FIND YOUR<br><span class="goal">NEXT RACE.</span></h1>
-    <p class="heroSub">Search 14,000+ races across 126 countries and discover where running could take you next. Explore every race in its real-world setting, save the ones that inspire you, and get an alert when entries open.</p>
+    <p class="heroSub">Search <!-- CATALOGUE-ROUND:START -->14,700+<!-- CATALOGUE-ROUND:END --> races across <!-- CATALOGUE-NC:START -->128<!-- CATALOGUE-NC:END --> countries and discover where running could take you next. Explore every race in its real-world setting, save the ones that inspire you, and get an alert when entries open.</p>
     <p class="heroOne">Discover. Plan. Run. Remember.</p>
     <div class="ctarow stack">
       <div class="lockup">
@@ -250,10 +251,12 @@
     <span class="k">The race calendar</span>
     <h2>Every race is <span class="g">here.</span></h2>
     <p><!-- CATALOGUE-STAT:START --><b>14,718 upcoming races in 128 countries</b><!-- CATALOGUE-STAT:END -->, seen from above.</p>
-    <div class="chips">
-      <a href="/races/us/">United States</a><a href="/races/uk/">United Kingdom</a><a href="/races/au/">Australia</a><a href="/races/za/">South Africa</a><a href="/races/ca/">Canada</a><a href="/races/ie/">Ireland</a><a href="/races/nz/">New Zealand</a><a class="all" href="/races/">Every country →</a>
+    <p class="countries"><a href="/races/us/">United States</a> <span class="sep">·</span> <a href="/races/uk/">United Kingdom</a> <span class="sep">·</span> <a href="/races/au/">Australia</a> <span class="sep">·</span> <a href="/races/za/">South Africa</a> <span class="sep">·</span> <a href="/races/ca/">Canada</a> <span class="sep">·</span> <a href="/races/ie/">Ireland</a> <span class="sep">·</span> <a href="/races/nz/">New Zealand</a> <span class="sep">·</span> <a class="all" href="/races/">Every country →</a></p>
+    <p class="handback">Save a race in the app and <b>we'll tell you the morning entries open.</b></p>
+    <div class="cta">
+      <div class="lockup"><img class="icon" src="/assets/appicon.png" width="48" height="48" alt="RunCalendar app icon"><a href="https://apps.apple.com/app/id6726998429"><img class="badge" src="/assets/appstore-badge-black.svg" width="143" height="48" alt="Download on the App Store"></a></div>
+      <span class="freeline">Free on iPhone · No account needed</span>
     </div>
-    <div class="handback"><span>Save a race in the app and <b>we'll tell you the morning entries open.</b></span><a class="getapp" href="#download"><img src="/assets/appicon.png" width="24" height="24" alt="">Get the app</a></div>
   </div>
   <div class="calcard" id="calcard" style="background-image:url(https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/d67ce124-e380-4610-81d5-ea99fcced2a1.jpg)">
     <span class="ek">Race calendar · Worldwide</span>
@@ -288,7 +291,7 @@
       <h2>Every race.<br><span class="g">Seen from above.</span></h2>
       <p>Every race is shown in <b>its real place</b>, seen from above — the coastline you'll follow, the city you'll run through, the desert you'll cross, the mountains that will keep you company.</p>
       <p>Open a race and the view opens with it.</p>
-      <p>14,000+ running events. 126 countries. Each one showing you where running could take you next. <b>Pick the view you want to earn.</b></p>
+      <p><!-- CATALOGUE-ROUND:START -->14,700+<!-- CATALOGUE-ROUND:END --> running events. <!-- CATALOGUE-NC:START -->128<!-- CATALOGUE-NC:END --> countries. Each one showing you where running could take you next. <b>Pick the view you want to earn.</b></p>
     </div>
     <div class="satphones">
       <div class="phone p1"><div class="screen">
@@ -385,7 +388,7 @@
 <section class="promises"><div class="wrap">
   <h2 class="sech">Built <span class="g">for runners</span></h2>
   <div class="pgrid three">
-    <div class="pitem"><span class="tk">✓</span><span class="tx"><b>Find it. Save it. Done.</b> 14,000+ races. See one you want to run? Save it to your season. When entries open, we’ll let you know.</span></div>
+    <div class="pitem"><span class="tk">✓</span><span class="tx"><b>Find it. Save it. Done.</b> <!-- CATALOGUE-ROUND:START -->14,700+<!-- CATALOGUE-ROUND:END --> races. See one you want to run? Save it to your season. When entries open, we’ll let you know.</span></div>
     <div class="pitem"><span class="tk">✓</span><span class="tx"><b>Just open and explore.</b> No account to create. No permissions to give. Open RunCalendar and start looking.</span></div>
     <div class="pitem"><span class="tk">✓</span><span class="tx"><b>Dates you can trust.</b> Confirmed dates show the exact day. Provisional dates show the month. If we don’t know, we don’t guess.</span></div>
   </div>

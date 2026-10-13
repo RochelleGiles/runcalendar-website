@@ -665,6 +665,11 @@ def main():
             counts = {cslug(c): f"{sum(1 for e in by_country[c] if visible_in_lists(e)):,}" for c in MAIN_MARKETS if c in by_country}
             counts[""] = f"{total:,}"
             h2 = re.sub(r"(<!-- CATALOGUE-STAT:START -->).*?(<!-- CATALOGUE-STAT:END -->)", lambda m: m.group(1) + stat + m.group(2), h, flags=re.S)
+            rounded = f"{total // 100 * 100:,}+"; nc = str(len(by_country))
+            h2 = re.sub(r"(<!-- CATALOGUE-ROUND:START -->).*?(<!-- CATALOGUE-ROUND:END -->)", lambda m: m.group(1) + rounded + m.group(2), h2, flags=re.S)
+            h2 = re.sub(r"(<!-- CATALOGUE-NC:START -->).*?(<!-- CATALOGUE-NC:END -->)", lambda m: m.group(1) + nc + m.group(2), h2, flags=re.S)
+            # the two meta descriptions cannot hold markers: keep their "14,000+" floor, follow the country count
+            h2 = re.sub(r"(races (?:across|in) )\d+( countries)", lambda m: m.group(1) + nc + m.group(2), h2)
             h2 = re.sub(r"(/\* CATALOGUE-COUNTS:START \*/).*?(/\* CATALOGUE-COUNTS:END \*/)",
                         lambda m: m.group(1) + json.dumps(counts, separators=(",", ":")) + m.group(2), h2, flags=re.S)
             if h2 != h:
