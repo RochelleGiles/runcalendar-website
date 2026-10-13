@@ -532,6 +532,8 @@ def main():
     sitemap_pages, sitemap_races = ["/races/"], []
     lang_of = lambda code: {"US": "en-US", "GB": "en-GB", "AU": "en-AU", "CA": "en-CA", "IE": "en-IE", "NZ": "en-NZ", "ZA": "en-ZA"}.get(code, "en")
 
+    world_idx = []
+
     for code in codes:
         if ONLY and code not in ONLY: continue
         evs = by_country[code]; cname = country_name[code]; cc = cslug(code); lang = lang_of(code); cin = in_country(code, cname)
@@ -547,6 +549,8 @@ def main():
         idx_path = f"/races/{cc}/search.json"
         os.makedirs(os.path.join(ROOT, "races", cc), exist_ok=True)
         with open(os.path.join(ROOT, "races", cc, "search.json"), "w") as f: json.dump(idx, f, ensure_ascii=False, separators=(",", ":"))
+        # the world index (home-page card + world hub, 2026-10-13): the same rows with the country in the place and the haystack
+        world_idx += [[r[0], r[1], (r[2] + " · " if r[2] else "") + cname, r[3], r[4], r[5] + " " + cname.lower()] for r in idx]
         # months
         months = sorted({month_key(e["next_event_date"]) for e in listed})[:14]
         month_links = [(month_label(m), f"/races/{cc}/{m}/") for m in months]
@@ -614,7 +618,7 @@ def main():
         body = head("Running races around the world — the RunCalendar race calendar | RunCalendar", f"{total:,} upcoming running races in {len(by_country)} countries, every date checked against the organiser. {TAGLINE}", "/races/", ld=ld, og_image=frame(manifest, hero_e) if hero_e else None) + f"""
 <div class="wrap">
   <div class="crumbs wide">Races</div>
-  {hero_block("Race calendar · Worldwide", "Running races around the world", f"{total:,} upcoming races in {len(by_country)} countries, from the Majors to your own town's. Every date checked against the organiser. {TAGLINE}", "Pick a country below to search its calendar", "/races/us/search.json", frame(manifest, hero_e) if hero_e else None, place_short(hero_e) if hero_e else "")}
+  {hero_block("Race calendar · Worldwide", "Running races around the world", f"{total:,} upcoming races in {len(by_country)} countries, from the Majors to your own town's. Every date checked against the organiser. {TAGLINE}", f"Search {total:,} races…", "/races/search.json", frame(manifest, hero_e) if hero_e else None, place_short(hero_e) if hero_e else "")}
   <div class="box">
     <div class="label">Where RunCalendar runs most</div><div class="pills">{main_links}</div>
     <div class="label">Every country</div><div class="states">{other_links}</div>
@@ -625,9 +629,8 @@ def main():
   {cta("web-world")}
   <p class="fine">{FINE}</p>
 </div>
-""" + FOOT
-        # the world hub's search box points at the US index; the hero copy says pick a country, so the box is decorative there
-        body = body.replace('<input id="q"', '<input id="q" disabled')
+""" + SEARCH_JS + FOOT
+        with open(os.path.join(ROOT, "races", "search.json"), "w") as f: json.dump(world_idx, f, ensure_ascii=False, separators=(",", ":"))
         write("/races/", body)
 
         # sitemaps: an index + chunks (≤ 10,000 URLs each keeps every file small)

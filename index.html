@@ -95,13 +95,6 @@
   .caltext p{font-size:17px; line-height:1.65; color:var(--secondary); margin-top:16px; max-width:520px;}
   .caltext p b{color:var(--ink);}
   .calsearch{flex:1.1; padding-top:8px;}
-  .srow{display:flex; gap:10px; align-items:stretch;}
-  .srow select, .srow input, .srow button{font-family:inherit; font-size:15.5px; border-radius:13px; border:1px solid var(--hairline);}
-  .srow select{flex:0 0 auto; padding:0 36px 0 14px; font-weight:700; color:var(--ink); background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%2355554F' stroke-width='2'/></svg>") no-repeat right 14px center; -webkit-appearance:none; appearance:none;}
-  .srow input{flex:1; min-width:0; padding:14px 16px; color:var(--ink); background:#fff;}
-  .srow input::placeholder{color:var(--muted);}
-  .srow button{flex:0 0 auto; padding:0 22px; background:var(--green); color:#fff; font-weight:800; border-color:var(--green); cursor:pointer;}
-  .srow select:focus, .srow input:focus{outline:2px solid var(--green); outline-offset:0; border-color:var(--green);}
   .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
   .chips a{font-size:13.5px; font-weight:700; color:var(--greenDeep); background:var(--greenTint); border-radius:99px; padding:8px 14px; text-decoration:none;}
   .chips a.all{background:transparent; border:1px solid var(--hairline); color:var(--secondary);}
@@ -109,11 +102,26 @@
   .handback b{color:var(--ink);}
   .getapp{flex:0 0 auto; display:inline-flex; align-items:center; gap:9px; background:var(--ink); color:#fff; font-weight:700; padding:7px 18px 7px 8px; border-radius:99px; font-size:14px; text-decoration:none; white-space:nowrap;}
   .getapp img{width:24px; height:24px; border-radius:7px; display:block; box-shadow:0 0 0 1px rgba(255,255,255,.25);}
+  .calin{align-items:center;}
+  .caltext .chips{margin-top:22px;}
+  .caltext .handback{margin-top:24px; max-width:520px;}
+  /* the satellite card (owner, 13 Oct 2026): the world hub's hero in miniature — its words, its search, a frame from the bucket */
+  .calcard{flex:0 0 46%; position:relative; isolation:isolate; border-radius:22px; overflow:hidden; min-height:340px; padding:30px 30px 26px; color:#fff; display:flex; flex-direction:column; justify-content:flex-end;
+    background:#0b1a12 left bottom/cover no-repeat; box-shadow:0 20px 50px rgba(28,27,24,.18);}
+  .calcard::before{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(to bottom, rgba(0,0,0,.18) 0%, rgba(0,0,0,.30) 45%, rgba(0,0,0,.72) 100%);}
+  .calcard .ek{font-size:11.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#7FD1B5;}
+  .calcard h3{font-size:30px; font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-top:8px; text-shadow:0 2px 18px rgba(0,0,0,.45);}
+  .calcard .cs{font-size:14px; color:rgba(255,255,255,.85); margin-top:8px; max-width:380px;}
+  .calcard form{margin-top:18px; position:relative;}
+  .calcard input{width:100%; font-family:inherit; font-size:15.5px; padding:14px 16px 14px 44px; border:1px solid #fff; border-radius:13px; color:var(--ink);
+    background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236B6B66' stroke-width='2.4' stroke-linecap='round'><circle cx='10.5' cy='10.5' r='6.5'/><path d='M15.5 15.5L21 21'/></svg>") no-repeat 14px center; box-shadow:0 8px 28px rgba(0,0,0,.25);}
+  .calcard input::placeholder{color:var(--muted);} .calcard input:focus{outline:2px solid var(--green); outline-offset:0;}
+  .calcard .cap{position:absolute; right:18px; bottom:14px; font-size:12.5px; font-weight:600; color:rgba(255,255,255,.8); text-shadow:0 1px 8px rgba(0,0,0,.6);}
+  .calcard .pad{height:30px;}
   /* the collections section sits on the surface ground, full width — the wrapper is OUTSIDE the generator's markers */
   .colwrap{background:var(--surface); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);}
   .colwrap + .journey{padding-top:80px;}
-  @media (max-width:960px){ .calin{flex-direction:column; gap:28px;} .caltext h2{font-size:32px;} .calband{padding:44px 0 40px;} }
-  @media (max-width:600px){ .srow{flex-wrap:wrap;} .srow select{flex:1 1 100%; padding-top:12px; padding-bottom:12px;} .srow input{flex:1 1 0; padding:12px 14px;} .srow button{padding:12px 18px;} }
+  @media (max-width:960px){ .calin{flex-direction:column; gap:28px; align-items:stretch;} .caltext h2{font-size:32px;} .calband{padding:44px 0 40px;} .calcard{flex:0 0 auto; width:100%; min-height:300px;} .caltext .handback{max-width:none;} }
 
   /* ============ SATELLITE BAND ============ */
   .satband{background:var(--ink); color:#fff; padding:88px 0 96px; margin-top:8px; position:relative; overflow:hidden;}
@@ -242,34 +250,33 @@
     <span class="k">The race calendar</span>
     <h2>Every race is <span class="g">here.</span></h2>
     <p><!-- CATALOGUE-STAT:START --><b>14,718 upcoming races in 128 countries</b><!-- CATALOGUE-STAT:END -->, seen from above.</p>
-  </div>
-  <div class="calsearch">
-    <form class="srow" id="calsearch" action="/races/us/" method="get">
-        <select name="cc" aria-label="Country">
-          <option value="us">United States</option>
-          <option value="uk">United Kingdom</option>
-          <option value="au">Australia</option>
-          <option value="za">South Africa</option>
-          <option value="ca">Canada</option>
-          <option value="ie">Ireland</option>
-          <option value="nz">New Zealand</option>
-          <option value="">Every country…</option>
-        </select>
-        <input type="search" name="q" placeholder="Search 7,826 races…" autocomplete="off" aria-label="Search races">
-        <button type="submit">Search</button>
-    </form>
     <div class="chips">
       <a href="/races/us/">United States</a><a href="/races/uk/">United Kingdom</a><a href="/races/au/">Australia</a><a href="/races/za/">South Africa</a><a href="/races/ca/">Canada</a><a href="/races/ie/">Ireland</a><a href="/races/nz/">New Zealand</a><a class="all" href="/races/">Every country →</a>
     </div>
     <div class="handback"><span>Save a race in the app and <b>we'll tell you the morning entries open.</b></span><a class="getapp" href="#download"><img src="/assets/appicon.png" width="24" height="24" alt="">Get the app</a></div>
   </div>
+  <div class="calcard" id="calcard" style="background-image:url(https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/d67ce124-e380-4610-81d5-ea99fcced2a1.jpg)">
+    <span class="ek">Race calendar · Worldwide</span>
+    <h3>Running races around the world</h3>
+    <p class="cs">From the Majors to your own town's. Every date checked against the organiser.</p>
+    <form id="calsearch" action="/races/" method="get">
+      <input type="search" name="q" placeholder="Search 14,718 races…" autocomplete="off" aria-label="Search races">
+    </form>
+    <div class="pad"></div>
+    <span class="cap" id="calcap">Boston, MA · seen from above</span>
+  </div>
 </div></section>
 <script>
 (function(){
   var counts=/* CATALOGUE-COUNTS:START */{"us":"7,824","uk":"1,467","au":"839","za":"464","ca":"365","ie":"301","nz":"260","":"14,718"}/* CATALOGUE-COUNTS:END */;
-  var f=document.getElementById('calsearch'), s=f.querySelector('select'), i=f.querySelector('input');
-  function ph(){ i.placeholder='Search '+(counts[s.value]||'')+' races…'; } s.addEventListener('change',ph); ph();
-  f.addEventListener('submit',function(e){ e.preventDefault(); var q=i.value.trim(); location.href='/races/'+(s.value?s.value+'/':'')+(q?'?q='+encodeURIComponent(q):''); });
+  var f=document.getElementById('calsearch'), i=f.querySelector('input');
+  if(counts['']) i.placeholder='Search '+counts['']+' races…';
+  f.addEventListener('submit',function(e){ e.preventDefault(); var q=i.value.trim(); location.href='/races/'+(q?'?q='+encodeURIComponent(q):''); });
+  // the card wears a different race's satellite frame on each visit — the quiet proof that this is a world calendar (owner, 13 Oct 2026)
+  var F=[['d67ce124-e380-4610-81d5-ea99fcced2a1','Boston, MA · seen from above'],['cba2c8c9-18db-4bac-a4ed-dd178480a2c2','London · seen from above'],['5193c858-c238-4f16-97cb-58d613fde3fb','Sydney, NSW · seen from above'],['38df29c8-b61d-4a8b-b33d-2c55c988d93b','Tokyo · seen from above'],['7e880e36-ea48-48b0-890e-f2448cf46cfa','Berlin · seen from above'],['0e3eb92b-8af6-4f3d-bc7a-0d2e31b6f87c','Durban, KwaZulu-Natal · seen from above']];
+  var pick=F[Math.floor(Math.random()*F.length)], card=document.getElementById('calcard');
+  card.style.backgroundImage='url(https://rteqvslwxgsgvccrgtzg.supabase.co/storage/v1/object/public/web-assets/sat/'+pick[0]+'.jpg)';
+  document.getElementById('calcap').textContent=pick[1];
 })();
 </script>
 
