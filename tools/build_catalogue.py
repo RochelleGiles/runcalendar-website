@@ -31,6 +31,11 @@ PAGE = 1000
 args = sys.argv[1:]
 ROOT = os.path.abspath(args[args.index("--out") + 1]) if "--out" in args else os.environ.get("SITE_ROOT") or os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "website")
 ONLY = set(args[args.index("--only") + 1].split(",")) if "--only" in args else None
+# the stylesheet link carries a hash of its content: the CDN keeps /_catalogue.css for a day (s-maxage=86400), so a
+# CSS change would otherwise reach cached edges a day late (the search-icon fix, 2026-10-13)
+import hashlib
+CSS_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "catalogue.css")
+CSS_VER = hashlib.sha1(open(CSS_SRC, "rb").read()).hexdigest()[:8]
 
 # Countries whose region codes read at a glance (the app's placeShort rule)
 CODE_COUNTRIES = {"US", "AU", "CA"}
@@ -245,7 +250,7 @@ def head(title, desc, canonical, lang="en", ld=None, og_image=None, noindex=Fals
 <meta property="og:image" content="{esc(og_image or SITE + '/assets/og.jpg')}">
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/_shared.css">
-<link rel="stylesheet" href="/_catalogue.css">
+<link rel="stylesheet" href="/_catalogue.css?v={CSS_VER}">
 {('<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>') if ld else ''}
 </head>
 <body>
