@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://runcalendar.com/race/defi-de-lolympe/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://runcalendar.com/race/waldi-trail/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://runcalendar.com/race/5-km-et-10-km-des-lions/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://runcalendar.com/race/trail-des-5calanques/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/martin-martine/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/grand-trail-stevenson/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/urban-trail-de-caudry/</loc><lastmod>2026-11-08</lastmod></url>
@@ -208,7 +204,6 @@
 <url><loc>https://runcalendar.com/race/run-set-match/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/trail-de-nigloland/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/mont-blanc-marathon/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://runcalendar.com/race/les-onze-dobernai/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/les-foulees-des-bistrots/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/ultra-marin-vannes/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/mesy-trail/</loc><lastmod>2026-11-08</lastmod></url>
@@ -217,6 +212,7 @@
 <url><loc>https://runcalendar.com/race/semi-marathon-de-la-cote-des-vikings/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/marathon-du-finistere-la-transleonarde/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/foulees-de-la-vallee-de-la-lys/</loc><lastmod>2026-11-08</lastmod></url>
+<url><loc>https://runcalendar.com/race/les-onze-dobernai/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/entre-pont-et-chateau/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/la-volcane/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/grand-duc-trail-de-chartreuse/</loc><lastmod>2026-11-08</lastmod></url>
@@ -224,7 +220,6 @@
 <url><loc>https://runcalendar.com/race/glandasstrail/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/les-capitelles-solidaires-2/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/trail-du-saleve/</loc><lastmod>2026-11-08</lastmod></url>
-<url><loc>https://runcalendar.com/race/trail-randonnee-penne-d-agenais/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/trail-solidaire-des-possibles/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/trail-du-bois-des-cotes/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/10-km-de-saint-adresse/</loc><lastmod>2026-11-08</lastmod></url>
@@ -1815,6 +1810,7 @@
 <url><loc>https://runcalendar.com/race/run-for-hope/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/singapore-marathon/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/nus-bizad-charity-run/</loc><lastmod>2026-11-08</lastmod></url>
+<url><loc>https://runcalendar.com/race/singapore-half-marathon/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/2xu-compression-run/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/ultra-trail-singapore/</loc><lastmod>2026-11-08</lastmod></url>
 <url><loc>https://runcalendar.com/race/mr-bean-chase-the-teddy-run/</loc><lastmod>2026-11-08</lastmod></url>
