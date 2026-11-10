@@ -88,6 +88,36 @@ def fetch_collections():
     for c in cols: c["members"] = by_col.get(c["id"], [])
     return cols
 
+GUIDES = {}   # event_id → published guide (slug, title, tagline, hero_image_url); filled in main(), read by rows and pages
+def fetch_guides():
+    try:
+        rows = get("/featured_guides?select=slug,title,tagline,hero_image_url,event_id&status=eq.published")
+        return {g["event_id"]: g for g in rows}
+    except Exception as e:
+        print("no guides read:", e, file=sys.stderr); return {}
+
+def guide_path(e): return f"/race/{e['slug']}/guide/"
+
+def guide_row(e):
+    # the app's E3 row (owner decision 2026-11-09): one green row, a keylined photo square, one line, a chevron
+    g = GUIDES.get(e["id"])
+    if not g: return ""
+    sq = f'<span class="sq"><img src="{esc(g["hero_image_url"])}" alt=""></span>' if g.get("hero_image_url") else ""
+    return (f'<a class="guiderow" href="{guide_path(e)}">{sq}<span>Read the race guide'
+            f'<span class="sub">Course, climbs, entries and race-day detail</span></span><span class="chev">›</span></a>')
+
+def guide_strip(evs, where):
+    # a country hub's own guides, newest race day first is wrong here — date order, like everything on the site
+    mine = [e for e in evs if e["id"] in GUIDES][:6]
+    if not mine: return ""
+    cards = ""
+    for e in mine:
+        g = GUIDES[e["id"]]
+        ph = f'<img src="{esc(g["hero_image_url"])}" alt="" loading="lazy">' if g.get("hero_image_url") else '<span class="grad"></span>'
+        date = weekday_date(e["next_event_date"], False) if e.get("next_date_confirmed") else month_year(e["next_event_date"])
+        cards += f'<a class="ccard" href="{guide_path(e)}"><div class="ph">{ph}</div><div class="cb"><h3>{esc(g.get("title") or ename(e))}</h3><div class="cs">{esc(date)} · {esc(place_short(e))}</div></div></a>'
+    return f'<div class="label">Race guides · {esc(where)} <a class="r" href="/guides/">All guides ›</a></div><div class="cards">{cards}</div>'
+
 def fetch_manifest():
     try:
         req = urllib.request.Request(MANIFEST + "?t=" + str(datetime.datetime.now().timestamp()))
@@ -256,13 +286,13 @@ def head(title, desc, canonical, lang="en", ld=None, og_image=None, noindex=Fals
 <body>
 <nav><div class="wrap navin">
   <a class="brand" href="/"><span class="mark"></span>RunCalendar</a>
-  <div class="navlinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/about/">About</a><a href="/add-event/">Add your event</a><a class="navcta" href="/#download">Get the app</a></div>
+  <div class="navlinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/guides/">Race guides</a><a href="/about/">About</a><a href="/add-event/">Add your event</a><a class="navcta" href="/#download">Get the app</a></div>
 </div></nav>
 """
 
 FOOT = """<footer><div class="wrap fin">
   <div>© 2026 RunCalendar · Net Project Limited</div>
-  <div class="flinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+  <div class="flinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/guides/">Race guides</a><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
 </div></footer>
 </body></html>
 """
@@ -314,7 +344,7 @@ def row(e, token, manifest):
     hook = f'<p class="hook">{esc(e["hook"])}</p>' if e.get("hook") else ""
     return f'''<li class="race">
   <a class="sq" href="{href}">{sq}</a>
-  <div class="t"><h3><a href="{href}">{esc(ename(e))}</a></h3><div class="meta"><b>{esc(date)}</b> · {esc(place_short(e))}{(" · " + esc(dist)) if dist else ""}</div>{hook}</div>
+  <div class="t"><h3><a href="{href}">{esc(ename(e))}</a>{f' <a class="gbadge" href="{guide_path(e)}">Guide</a>' if e["id"] in GUIDES else ''}</h3><div class="meta"><b>{esc(date)}</b> · {esc(place_short(e))}{(" · " + esc(dist)) if dist else ""}</div>{hook}</div>
   <div class="acts"><a class="save" href="{STORE}{token}">Save</a></div>
 </li>'''
 
@@ -336,7 +366,7 @@ def collection_cards(cols, code, by_id):
     for c in picks:
         iso_ = (c.get("countries") or [None])[0]
         mood = c["slug"][:-3] if iso_ and c["slug"].endswith("-" + iso_.lower()) else c["slug"]
-        path = f"/collections/{cslug(iso_)}/{mood}/" if iso_ else f"/collections/{mood}/"
+        path = "/guides/" if c["slug"] == "race-guides" else (f"/collections/{cslug(iso_)}/{mood}/" if iso_ else f"/collections/{mood}/")
         ph = f'<img src="{esc(c["hero_image_url"])}" alt="" loading="lazy">' if c.get("hero_image_url") else '<span class="grad"></span>'
         cards += f'<a class="ccard" href="{path}"><div class="ph">{ph}</div><div class="cb"><h3>{esc(c["title"])}</h3><div class="cs">{esc(c.get("hook") or c.get("subtitle") or "")}</div></div></a>'
     return f'<div class="label">Collections{(" in " + esc(by_id["name"])) if by_id else ""}</div><div class="cards">{cards}</div>'
@@ -444,6 +474,7 @@ def race_page(e, manifest, siblings, cols_for_event):
           "location": {"@type": "Place", "name": place_short(e) or cname, "address": {"@type": "PostalAddress", "addressLocality": e.get("city_name") or "", "addressRegion": region, "addressCountry": code}}}
     if e.get("name") != name: ld["alternateName"] = e["name"]
     if img: ld["image"] = img
+    if e["id"] in GUIDES: ld["subjectOf"] = {"@type": "Article", "headline": f"{name} race guide", "url": SITE + guide_path(e)}
     pc = e.get("primary_city") or {}
     if pc.get("lat") is not None: ld["location"]["geo"] = {"@type": "GeoCoordinates", "latitude": pc["lat"], "longitude": pc["lng"]}
     if e.get("website"):
@@ -463,6 +494,7 @@ def race_page(e, manifest, siblings, cols_for_event):
     <div class="place">{esc(place_long(e))}</div>
     {f'<div class="chips">{ch}</div>' if ch else ''}
     {f'<p class="hook">{esc(e["hook"])}</p>' if e.get("hook") else ''}
+    {guide_row(e)}
     <div class="saverow"><a class="savebtn" id="open" href="{STORE}web-{cc}-race">Save to my season</a><div class="small">Opens in RunCalendar.<br>Free on iPhone · No account needed.</div></div>
   </div>
 </div>
@@ -512,13 +544,14 @@ def main():
     events = fetch_events()
     cols = fetch_collections()
     manifest = fetch_manifest()
+    GUIDES.update(fetch_guides())
     print(f"{len(events)} events, {len(cols)} collections, {len(manifest)} satellite frames", file=sys.stderr)
     by_id = {e["id"]: e for e in events}
     col_paths = collections.defaultdict(list)
     for c in cols:
         iso_ = (c.get("countries") or [None])[0]
         mood = c["slug"][:-3] if iso_ and c["slug"].endswith("-" + iso_.lower()) else c["slug"]
-        p = f"/collections/{cslug(iso_)}/{mood}/" if iso_ else f"/collections/{mood}/"
+        p = "/guides/" if c["slug"] == "race-guides" else (f"/collections/{cslug(iso_)}/{mood}/" if iso_ else f"/collections/{mood}/")
         for eid in c["members"]:
             if eid in by_id: col_paths[eid].append((c["title"], p))
 
@@ -566,8 +599,9 @@ def main():
         see_all = (f"See all {len(listed):,} races in {cin} by month ›", f"/races/{cc}/{months[0]}/") if months else None
         sub = f"{len(listed):,} upcoming races, from the big city starts to your own town's. Every date checked against the organiser. {TAGLINE}"
         cols_html = collection_cards(cols, code, {"name": cin})
+        country_html = guide_strip(listed, cname) + cols_html
         hub_page(f"/races/{cc}/", f'<a href="/races/">Races</a><span>›</span>{esc(cname)}', f"Race calendar · {esc(cname)}", f"Running races in {cin}", sub,
-                 f"Search {len(listed):,} races in {cin}", idx_path, hero_img, hero_cap, month_links, region_links, None, coming, see_all, token, cols_html, lang)
+                 f"Search {len(listed):,} races in {cin}", idx_path, hero_img, hero_cap, month_links, region_links, None, coming, see_all, token, country_html, lang)
         sitemap_pages.append(f"/races/{cc}/")
         # month pages
         for m in months:
@@ -644,6 +678,7 @@ def main():
         for dirpath, _, files in os.walk(os.path.join(ROOT, "collections")):
             if "index.html" in files:
                 rel = "/" + os.path.relpath(dirpath, ROOT).replace(os.sep, "/") + "/"
+                if 'http-equiv="refresh"' in open(os.path.join(dirpath, "index.html"), encoding="utf-8").read(2000): continue
                 if rel != "/collections/": coll_pages.append(rel)
         smfile("sitemap-pages.xml", static + sorted(coll_pages) + sitemap_pages)
         chunks = [sitemap_races[i:i + 10000] for i in range(0, len(sitemap_races), 10000)]

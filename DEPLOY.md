@@ -56,7 +56,9 @@ upcoming race, ~15,000) are **generated**, never hand-edited:
   repository's `tools/` on every sync. `build_collections.py` runs first, then
   `build_catalogue.py --out .` (it owns `/race/`, `sitemap.xml` and the
   `sitemap-*.xml` chunks, `/races/<cc>/search.json` and `_catalogue.css`).
-- **Nightly rebuild**: `.github/workflows/nightly.yml` runs both generators at
+- `build_guides.py --out .` runs THIRD (added 10 Nov 2026): it owns `/race/<slug>/guide/`, `/guides/`,
+  the forwarding page at `/collections/race-guides/` and `sitemap-guides.xml` (registered in `sitemap.xml`).
+- **Nightly rebuild**: `.github/workflows/nightly.yml` runs the three generators at
   14:30 UTC, commits whatever changed and pushes — DigitalOcean deploys as it
   does for a hand push. No secrets: it reads the public API only.
 - **Satellite frames** come from the public `web-assets` bucket

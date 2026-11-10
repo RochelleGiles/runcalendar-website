@@ -24,6 +24,8 @@ jobs:
         run: SITE_ROOT=. python3 tools/build_collections.py
       - name: Build the catalogue
         run: python3 tools/build_catalogue.py --out .
+      - name: Build the guides
+        run: python3 tools/build_guides.py --out .
       - name: Commit and push if anything changed
         run: |
           git config user.name "RunCalendar nightly"

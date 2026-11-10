@@ -58,6 +58,7 @@ def mood_of(c):
     return iso, mood
 
 def page_path(c):
+    if c["slug"] == "race-guides": return "/guides/"      # the guides hub (build_guides.py) replaced this collection's page, 2026-11-10
     iso, mood = mood_of(c)
     return f"/collections/{CC[iso][0]}/{mood}/" if iso else f"/collections/{mood}/"
 
@@ -87,13 +88,13 @@ def head(title, desc, canonical, lang="en", extra="", noindex=False, ld=None, og
 <body>
 <nav><div class="wrap navin">
   <a class="brand" href="/"><span class="mark"></span>RunCalendar</a>
-  <div class="navlinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/about/">About</a><a href="/add-event/">Add your event</a><a class="navcta" href="/#download">Get the app</a></div>
+  <div class="navlinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/guides/">Race guides</a><a href="/about/">About</a><a href="/add-event/">Add your event</a><a class="navcta" href="/#download">Get the app</a></div>
 </div></nav>
 """
 
 FOOT = """<footer><div class="wrap fin">
   <div>© 2026 RunCalendar · Net Project Limited</div>
-  <div class="flinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+  <div class="flinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/guides/">Race guides</a><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
 </div></footer>
 </body></html>
 """
@@ -260,7 +261,7 @@ def race_page(e, cols):
 
 def card(c, n):
     ph = f'<div class="ph"><img loading="lazy" src="{esc(c["hero_image_url"])}" alt=""></div>' if c.get("hero_image_url") else '<div class="ph"></div>'
-    return f'<a class="ccard" href="{page_path(c)}">{ph}<div class="cb"><h3>{esc(c["title"])}</h3><div class="cs">{esc(c.get("subtitle") or "")}</div><div class="cn">{n} races ›</div></div></a>'
+    return f'<a class="ccard" href="{page_path(c)}">{ph}<div class="cb"><h3>{esc(c["title"])}</h3><div class="cs">{esc(c.get("subtitle") or "")}</div><div class="cn">{n} {"guides" if c["slug"] == "race-guides" else "races"} ›</div></div></a>'
 
 def hub(cols, counts):
     globals_ = [c for c in cols if not c.get("countries")]
@@ -350,7 +351,7 @@ def home_section(cols, counts):
 </style>
 <section class="colsec wrap" id="collections">
   <h2 class="sech">Races, sorted by <span class="g">the reason</span> you'd run them.</h2>
-  <p class="sub">Discover the races worth travelling for, the great city halves, epic trails, winter escapes and the world's iconic marathons.<span class="more"> Explore our race guides, or stay closer to home with flat and fast PB courses, brilliant first finish lines, beach runs, trail escapes and races with a cause.</span></p>
+  <p class="sub">Discover the races worth travelling for, the great city halves, epic trails, winter escapes and the world's iconic marathons.<span class="more"> <a href="/guides/" style="color:var(--greenDeep);font-weight:700;text-decoration:none">Explore our race guides</a>, or stay closer to home with flat and fast PB courses, brilliant first finish lines, beach runs, trail escapes and races with a cause.</span></p>
   <p class="tag">Every collection is hand-picked. Every race earns its place.</p>
   <div class="cards">{"".join(card(c, counts[c["id"]]) for c in globals_)}{country_card}</div>
   <a class="all" href="/collections/">See all collections, including your country's own ›</a>
@@ -393,7 +394,7 @@ def main():
         evs = [e for _, e in sorted(by_col[c["id"]], key=lambda t: (t[1]["next_event_date"], t[1]["name"]))]
         iso, _ = mood_of(c)
         sibs = [s for s in cols if (mood_of(s)[0] == iso) or not s.get("countries")] if iso else [s for s in cols if not s.get("countries")]
-        urls.append(collection_page(c, evs, sibs, None))
+        if c["slug"] != "race-guides": urls.append(collection_page(c, evs, sibs, None))   # its page is the /guides/ hub
         for e in evs: ev_cols[e["id"]].append(c)
     for eid, cs in ev_cols.items(): race_page(events[eid], cs)
     hub(cols, counts)
