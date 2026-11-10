@@ -469,7 +469,7 @@ def race_page(e, manifest, siblings, cols_for_event):
     meta_desc = (e.get("hook") or f"{name} in {place_short(e)}.") + f" {short_date}." + (f" {dist}." if dist else "") + " Course, key dates and the race seen from above."
     ed = edition(e)
     ld = {"@context": "https://schema.org", "@type": "SportsEvent", "name": name, "sport": "Running", "url": SITE + path,
-          "startDate": e["next_event_date"], "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "startDate": e["next_event_date"], "endDate": e["next_event_date"], "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
           "description": (e.get("hook") or desc[:200] or name),
           "location": {"@type": "Place", "name": place_short(e) or cname, "address": {"@type": "PostalAddress", "addressLocality": e.get("city_name") or "", "addressRegion": region, "addressCountry": code}}}
     if e.get("name") != name: ld["alternateName"] = e["name"]

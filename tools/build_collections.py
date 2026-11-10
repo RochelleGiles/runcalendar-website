@@ -169,8 +169,11 @@ def collection_page(c, evs, siblings, all_by_slug):
     crumbs = f'<a href="/collections/">Collections</a><span>›</span>' + (f'<a href="/collections/{cc}/">{esc(cname)}</a><span>›</span>' if iso else "") + esc(c["title"])
     ld = {"@context": "https://schema.org", "@type": "ItemList", "name": c["title"] + (f" — {c['subtitle']}" if c.get("subtitle") else ""),
           "url": SITE + path, "numberOfItems": len(evs),
-          "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": SITE + f"/race/{e['slug']}/", "item": {"@type": "SportsEvent", "name": e["name"], "startDate": e["next_event_date"], "sport": "Running",
+          "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": SITE + f"/race/{e['slug']}/", "item": {"@type": "SportsEvent", "name": e["name"], "startDate": e["next_event_date"], "endDate": e["next_event_date"], "sport": "Running",
+                 "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                 "description": e.get("hook") or f"{e['name']} in {e['city_name'] or e['country_name']}.",
                  "url": SITE + f"/race/{e['slug']}/",
+                 **({"organizer": {"@type": "Organization", "name": e["name"], "url": e["website"]}} if e.get("website") else {}),
                  "location": {"@type": "Place", "name": e["city_name"], "address": {"@type": "PostalAddress", "addressLocality": e["city_name"], "addressCountry": e["country"]}}}} for i, e in enumerate(evs)]}
     more = "".join(f'<a href="{page_path(s)}">{esc(s["title"])}</a>' for s in siblings if s["slug"] != c["slug"])
     heading = f"{esc(c['title'])}" if iso is None else f"{esc(c['title'])}"
@@ -376,7 +379,7 @@ def main():
     events = {}
     for i in range(0, len(ids), 80):
         chunk = ",".join(ids[i:i+80])
-        for e in get(f"/events?id=in.({chunk})&status=eq.published&select=id,slug,display_name,name,city_name,state_name,state_code,next_event_date,next_date_confirmed,distance_summary,hook,tier,co:countries!country_id(iso_code,name)"):
+        for e in get(f"/events?id=in.({chunk})&status=eq.published&select=id,slug,display_name,name,city_name,state_name,state_code,next_event_date,next_date_confirmed,distance_summary,hook,tier,website,co:countries!country_id(iso_code,name)"):
             if e.get("tier") == "excluded" or not e.get("next_event_date"): continue
             e["name"] = e.get("display_name") or e["name"]
             e["country"] = (e.get("co") or {}).get("iso_code"); e["country_name"] = (e.get("co") or {}).get("name")

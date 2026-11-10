@@ -160,8 +160,17 @@ def guide_page(g, e, manifest):
           "author": {"@type": "Organization", "name": "RunCalendar", "url": SITE},
           "publisher": {"@type": "Organization", "name": "RunCalendar", "url": SITE, "logo": {"@type": "ImageObject", "url": SITE + "/assets/appicon-180.png"}},
           "about": {"@type": "SportsEvent", "name": ename(e), "sport": "Running", "url": SITE + f"/race/{e['slug']}/", "startDate": e["next_event_date"],
+                    "endDate": e["next_event_date"], "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                    "description": tagline or e.get("hook") or ename(e),
                     "location": {"@type": "Place", "name": place_short(e) or cname, "address": {"@type": "PostalAddress", "addressLocality": e.get("city_name") or "", "addressRegion": region, "addressCountry": code}}}}
-    if img: ld["image"] = img
+    if img: ld["image"] = img; ld["about"]["image"] = img
+    ed = edition(e)
+    if e.get("website"):
+        ld["about"]["organizer"] = {"@type": "Organization", "name": e["name"], "url": e["website"]}
+        avail = "https://schema.org/SoldOut" if (ed.get("sold_out") or ed.get("registration_state") == "sold_out") else ("https://schema.org/InStock" if ed.get("registration_state") == "open" else None)
+        if avail:
+            ld["about"]["offers"] = {"@type": "Offer", "availability": avail, "url": e["website"]}
+            if ed.get("registration_closes"): ld["about"]["offers"]["validThrough"] = ed["registration_closes"]
     lang = {"US": "en-US", "GB": "en-GB", "AU": "en-AU", "CA": "en-CA", "IE": "en-IE", "NZ": "en-NZ", "ZA": "en-ZA"}.get(code, "en")
     body = head(f"{name} race guide — course, climbs and race-day detail | RunCalendar", meta_desc, path, lang, ld=ld, og_image=img) + f"""
 <div class="wrap">
