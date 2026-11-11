@@ -516,7 +516,7 @@ def race_page(e, manifest, siblings, cols_for_event):
   {f'<div class="label">{more_label} <a class="r" href="{more_href}">All ›</a></div><ul class="races">{more}</ul>' if more else ''}
 
   <div class="foot">
-    <div class="claim">Run this event? <a href="/claim/?event={e['id']}">Claim it on runcalendar.com</a></div>
+    <div class="claim">Run this event? <a href="/claim/?event={e['id']}">Update it on runcalendar.com</a></div>
     {f'<a class="site" href="{esc(e["website"])}" rel="nofollow noopener">Visit event website ›</a>' if e.get("website") else ''}
   </div>
   <p class="fine">A confirmed date shows its day; a provisional one shows only its month, because we won't claim a day we don't have. This page is rebuilt every night from the RunCalendar catalogue.</p>

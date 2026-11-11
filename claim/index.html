@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claim your event — RunCalendar</title>
-<meta name="description" content="Organisers: claim your event's listing on RunCalendar to confirm dates and details at the source, and earn the Confirmed by organiser badge.">
+<title>Update your event — RunCalendar</title>
+<meta name="description" content="Organisers: keep your event's RunCalendar listing up to date at the source: your dates, your entry window and your course.">
 <link rel="canonical" href="https://runcalendar.com/claim/">
 <link rel="icon" href="/assets/appicon-64.png" type="image/png">
 <link rel="apple-touch-icon" href="/assets/appicon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RunCalendar">
-<meta property="og:title" content="Claim your event — RunCalendar">
-<meta property="og:description" content="Organisers: claim your event's listing on RunCalendar to confirm dates and details at the source, and earn the Confirmed by organiser badge.">
+<meta property="og:title" content="Update your event — RunCalendar">
+<meta property="og:description" content="Organisers: keep your event's RunCalendar listing up to date at the source: your dates, your entry window and your course.">
 <meta property="og:url" content="https://runcalendar.com/claim/">
 <meta property="og:image" content="https://runcalendar.com/assets/og.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
@@ -25,8 +25,8 @@
 </div></nav>
 
 <div class="pagehead wrap">
-  <h1>Run this event?<br><span class="g">Claim it.</span></h1>
-  <p class="sub">Claiming your listing keeps it confirmed at the source: your dates, your registration windows, your course — plus the <b>"Confirmed by organiser"</b> badge runners see in the app. Free, like everything else we do for events.</p>
+  <h1>Run this event?<br><span class="g">Keep it up to date.</span></h1>
+  <p class="sub">Tell us your dates, your entry window and your course, and we'll keep your listing right at the source. Free, like everything else we do for events.</p>
 </div>
 
 <div class="content">
@@ -49,22 +49,22 @@
     <label>Event's official website</label>
     <input type="url" name="website" required>
 
-    <label>Anything supporting your claim? <span class="opt">— optional</span></label>
+    <label>Anything that shows you run it? <span class="opt">— optional</span></label>
     <textarea name="supporting" placeholder="e.g. you're named on the event's contact page, or the committee email we should check with"></textarea>
 
     <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off"><!-- honeypot -->
 
-    <button class="submit" type="submit" id="sbtn">Claim my event</button>
+    <button class="submit" type="submit" id="sbtn">Confirm I run this event</button>
     <div class="formnote" id="ferr" style="display:none; color:#B3261E; font-weight:700;"></div>
-    <div class="formnote">We'll email a confirmation link, then review — most claims are approved within a few days.</div>
+    <div class="formnote">We'll email a confirmation link, then check — most are approved within a few days.</div>
   </form>
   <div class="tintcard" id="fok" style="display:none; font-size:16px;">
-    <b>Claim received — check your inbox.</b> We've sent a confirmation link to your email address. Click it, and we'll review your claim — you'll hear from us within a few days.
+    <b>Thanks — check your inbox.</b> We've sent a confirmation link to your email address. Click it, and we'll check your details — you'll hear from us within a few days.
   </div>
 
-  <h2>What claiming gets you</h2>
-  <p><b>A direct line for the details runners plan around.</b> Confirmed dates the moment you announce them, registration windows, cutoffs, a course file for the elevation profile, and one great photo of your event's real scenery. Everything you send is reviewed and published by us — you never have to learn a dashboard.</p>
-  <p><b>The badge.</b> Claimed events show "Confirmed by organiser" in the app — the strongest trust signal a listing can carry, and runners notice.</p>
+  <h2>What you get</h2>
+  <p><b>A direct line for the details runners plan around.</b> Confirmed dates the moment you announce them, registration windows, cutoffs, and a course file (GPX) for the course map and elevation profile. Everything you send is reviewed and published by us — you never have to learn a dashboard.</p>
+  <p><b>Your runners hear first.</b> Tell us the day entries open, and runners who saved your race get a reminder on their phone that morning.</p>
 </div>
 
 <footer><div class="wrap fin">
@@ -100,8 +100,8 @@
         var r=await fetch(SB,{method:'POST',headers:Object.assign({'Content-Type':'application/json'},H),body:JSON.stringify(data)});
         var j=await r.json();
         if(r.ok&&j.ok){ f.style.display='none'; document.getElementById('fok').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); }
-        else{ err.textContent=j.error||'Something went wrong — please try again.'; err.style.display='block'; btn.disabled=false; btn.textContent='Claim my event'; }
-      }catch(_){ err.textContent='Network problem — please try again, or email team@runcalendar.com.'; err.style.display='block'; btn.disabled=false; btn.textContent='Claim my event'; }
+        else{ err.textContent=j.error||'Something went wrong — please try again.'; err.style.display='block'; btn.disabled=false; btn.textContent='Confirm I run this event'; }
+      }catch(_){ err.textContent='Network problem — please try again, or email team@runcalendar.com.'; err.style.display='block'; btn.disabled=false; btn.textContent='Confirm I run this event'; }
     }
   });
 })();
