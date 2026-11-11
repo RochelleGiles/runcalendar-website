@@ -107,8 +107,9 @@ def guide_row(e):
             f'<span class="sub">Course, climbs, entries and race-day detail</span></span><span class="chev">›</span></a>')
 
 def guide_strip(evs, where):
-    # a country hub's own guides, newest race day first is wrong here — date order, like everything on the site
-    mine = [e for e in evs if e["id"] in GUIDES][:6]
+    # a country hub's own guides, newest race day first is wrong here — date order, like everything on the site.
+    # EVERY guide of the country, no cap (owner, 11 Nov 2026: a cap of 6 hid New York, the US's 7th guide)
+    mine = [e for e in evs if e["id"] in GUIDES]
     if not mine: return ""
     cards = ""
     for e in mine:
