@@ -133,3 +133,21 @@ ol.things li:before{content:counter(n);width:34px;height:34px;border-radius:99px
 .guiderow .sub{display:block;font-size:13px;font-weight:600;color:var(--secondary);margin-top:2px}
 .gbadge{display:inline-block;vertical-align:2px;margin-left:6px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--greenDeep);background:var(--greenTint);padding:3px 8px;border-radius:99px;text-decoration:none}
 @media(max-width:720px){.standfirst{font-size:16.5px}}
+/* ORGANISER PHOTOS (owner decision 2026-11-12): under Course, the collection strip's tile (148 × 104, 10 apart, r14),
+   sideways on a phone, one row on a laptop; the full-screen view: ink ground, close circle, "2 of 4", the credit below.
+   Never tinted, no type on a photograph. */
+.phead .r{float:right;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:0;line-height:30px}
+.pstrip{display:flex;gap:10px;overflow-x:auto;margin-top:14px;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.pstrip::-webkit-scrollbar{display:none}
+.ph{flex:0 0 148px;height:104px;border-radius:14px;overflow:hidden;border:0;padding:0;background:var(--surface);cursor:zoom-in;scroll-snap-align:start}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.pview{position:fixed;inset:0;z-index:100;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.pview[hidden]{display:none}
+.pimg{max-width:100%;max-height:calc(100% - 150px);object-fit:contain;display:block}
+.pclose{position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--ink);border:0;font-size:17px;font-weight:700;cursor:pointer;font-family:inherit}
+.pcount{position:absolute;top:24px;left:64px;right:64px;text-align:center;font-size:14px;font-weight:600;color:#fff;pointer-events:none}
+.pcredit{position:absolute;bottom:28px;left:16px;right:16px;text-align:center;font-size:13px;font-weight:600;color:rgba(255,255,255,.72)}
+.pprev,.pnext{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:26px;line-height:1;cursor:pointer;font-family:inherit}
+.pprev{left:16px}.pnext{right:16px}
+.pprev[hidden],.pnext[hidden]{display:none}
+@media(hover:none){.pprev,.pnext{display:none}}
