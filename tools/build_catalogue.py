@@ -96,6 +96,68 @@ def fetch_guides():
     except Exception as e:
         print("no guides read:", e, file=sys.stderr); return {}
 
+PHOTOS = {}   # event_id → published organiser photographs in position order; filled in main(), read by race pages
+def fetch_photos():
+    # ORGANISER PHOTOS (owner decision 2026-11-12, CLAUDE.md): published event_photos rows, display columns only (the
+    # anon grant allows nothing else). A failed read renders no Photos sections tonight, never a broken build.
+    # RC_PHOTOS_FIXTURE = a local JSON list of rows (with image_url/thumb_url) for previews; never set in the nightly.
+    fix = os.environ.get("RC_PHOTOS_FIXTURE")
+    try:
+        rows = json.load(open(fix)) if fix else get(
+            "/event_photos?select=event_id,position,image_path,thumb_path,width,height,credit,photographer"
+            "&status=eq.published&order=event_id,position")
+    except Exception as e:
+        print("no event photos read:", e, file=sys.stderr); return {}
+    out = collections.defaultdict(list)
+    for r in rows: out[r["event_id"]].append(r)
+    return out
+
+def photo_url(r, kind):
+    # our own public bucket, never the organiser's link; a preview fixture may carry its own URLs
+    return r.get(kind + "_url") or f"{BUCKET}/event-photos/{r[kind + '_path']}"
+
+def photos_block(e):
+    # under Course, before Key dates (same place as the app): "Photos" with "From <organiser>" on the right, two to four
+    # tiles at the collection strip's size (148 × 104, 10 apart, radius 14) scrolling sideways on a phone, one row on a
+    # laptop; a tap opens the full-screen view ("2 of 4", the credit, the photographer only there). No type on a photo.
+    ps = sorted(PHOTOS.get(e["id"]) or [], key=lambda r: r["position"])[:4]
+    if not ps: return ""
+    credit = ps[0]["credit"]; n = len(ps)
+    tiles = "".join(f'<button class="ph" type="button" data-i="{i}" aria-label="Photo {i + 1} of {n}, from {esc(credit)}">'
+                    f'<img src="{esc(photo_url(r, "thumb"))}" alt="" width="148" height="104" loading="lazy"></button>' for i, r in enumerate(ps))
+    data = json.dumps({"credit": credit, "photos": [{"src": photo_url(r, "image"), "by": r.get("photographer") or ""} for r in ps]},
+                      ensure_ascii=False).replace("</", "<\\/")
+    return f"""<h2 class="phead">Photos <span class="r">From {esc(credit)}</span></h2>
+  <div class="pstrip">{tiles}</div>
+  <div class="pview" id="pview" hidden role="dialog" aria-modal="true" aria-label="Photos from {esc(credit)}">
+    <button class="pclose" type="button" aria-label="Close">✕</button><div class="pcount"></div>
+    <button class="pprev" type="button" aria-label="Previous photo">‹</button><img class="pimg" alt="">
+    <button class="pnext" type="button" aria-label="Next photo">›</button><div class="pcredit"></div>
+  </div>
+  <script type="application/json" id="pdata">{data}</script>
+  <script>
+  (function(){{
+    var d = JSON.parse(document.getElementById('pdata').textContent), n = d.photos.length, i = 0, x0 = null;
+    var v = document.getElementById('pview'), img = v.querySelector('.pimg');
+    function show(k){{ i = (k + n) % n; img.src = d.photos[i].src;
+      v.querySelector('.pcount').textContent = (i + 1) + ' of ' + n;
+      v.querySelector('.pcredit').textContent = d.credit + (d.photos[i].by ? ' · Photo: ' + d.photos[i].by : ''); }}
+    function open(k){{ show(k); v.hidden = false; document.body.style.overflow = 'hidden'; v.querySelector('.pclose').focus(); }}
+    function close(){{ v.hidden = true; document.body.style.overflow = ''; img.removeAttribute('src'); }}
+    document.querySelectorAll('.pstrip .ph').forEach(function(b){{ b.addEventListener('click', function(){{ open(+b.dataset.i); }}); }});
+    v.querySelector('.pclose').addEventListener('click', close);
+    v.querySelector('.pprev').addEventListener('click', function(){{ show(i - 1); }});
+    v.querySelector('.pnext').addEventListener('click', function(){{ show(i + 1); }});
+    if (n < 2) {{ v.querySelector('.pprev').hidden = true; v.querySelector('.pnext').hidden = true; }}
+    v.addEventListener('click', function(ev){{ if (ev.target === v) close(); }});
+    document.addEventListener('keydown', function(ev){{ if (v.hidden) return;
+      if (ev.key === 'Escape') close(); else if (ev.key === 'ArrowLeft') show(i - 1); else if (ev.key === 'ArrowRight') show(i + 1); }});
+    v.addEventListener('touchstart', function(ev){{ x0 = ev.touches[0].clientX; }}, {{passive: true}});
+    v.addEventListener('touchend', function(ev){{ if (x0 === null) return; var dx = ev.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1)); }});
+  }})();
+  </script>"""
+
 def guide_path(e): return f"/race/{e['slug']}/guide/"
 
 def guide_row(e):
@@ -503,6 +565,8 @@ def race_page(e, manifest, siblings, cols_for_event):
 <div class="content">
   {('<h2>Course</h2>' + (f'<p>{esc(course)}</p>' if course else '') + (f'<div class="tiles">{tiles}</div>' if tiles else '')) if (course or tiles) else ''}
 
+  {photos_block(e)}
+
   <h2>Key dates</h2>
   <ul class="dates">{kd}</ul>
   {trust}
@@ -546,7 +610,8 @@ def main():
     cols = fetch_collections()
     manifest = fetch_manifest()
     GUIDES.update(fetch_guides())
-    print(f"{len(events)} events, {len(cols)} collections, {len(manifest)} satellite frames", file=sys.stderr)
+    PHOTOS.update(fetch_photos())
+    print(f"{len(events)} events, {len(cols)} collections, {len(manifest)} satellite frames, {sum(map(len, PHOTOS.values()))} organiser photos on {len(PHOTOS)} races", file=sys.stderr)
     by_id = {e["id"]: e for e in events}
     col_paths = collections.defaultdict(list)
     for c in cols:
