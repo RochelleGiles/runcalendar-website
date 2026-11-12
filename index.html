@@ -191,7 +191,7 @@
 
   footer{border-top:1px solid var(--hairline); padding:30px 0 44px;}
   .fin{display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--muted); flex-wrap:wrap; gap:12px;}
-  .flinks{display:flex; gap:22px;}
+  .flinks{display:flex; flex-wrap:wrap; gap:10px 22px;} /* wraps on phones: 8 links never fit 375pt (12 Nov 2026) */
   .flinks a{color:var(--secondary); text-decoration:none; font-weight:600;}
 
   @media (max-width:960px){
