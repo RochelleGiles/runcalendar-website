@@ -674,7 +674,7 @@ def main():
                 f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
                 for u in urls: f.write(f"<url><loc>{SITE}{u}</loc><lastmod>{TODAY.isoformat()}</lastmod></url>\n")
                 f.write("</urlset>\n")
-        static = ["/", "/about/", "/contact/", "/add-event/", "/claim/", "/privacy/", "/terms/", "/collections/"]
+        static = ["/", "/about/", "/contact/", "/add-event/", "/claim/", "/photos/", "/privacy/", "/terms/", "/photo-terms/", "/collections/"]
         coll_pages = []
         for dirpath, _, files in os.walk(os.path.join(ROOT, "collections")):
             if "index.html" in files:

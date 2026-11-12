@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your race, in photos — RunCalendar</title>
+<meta name="description" content="Organisers: add two to four race-day photographs to your event's page in the RunCalendar app and on runcalendar.com, at no cost.">
+<link rel="canonical" href="https://runcalendar.com/photos/">
+<link rel="icon" href="/assets/appicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/appicon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RunCalendar">
+<meta property="og:title" content="Your race, in photos — RunCalendar">
+<meta property="og:description" content="Organisers: add two to four race-day photographs to your event's page in the RunCalendar app and on runcalendar.com, at no cost.">
+<meta property="og:url" content="https://runcalendar.com/photos/">
+<meta property="og:image" content="https://runcalendar.com/assets/og.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/_shared.css">
+<style>
+.rules{background:var(--surface); border-radius:14px; padding:18px 22px; margin-top:26px;}
+.rules b{font-size:14px; font-weight:800; color:var(--ink);}
+.rules ul{padding-left:20px; margin-top:6px;}
+.rules li{font-size:14px; line-height:1.65; color:var(--body); margin-top:6px;}
+label.agree{display:flex; gap:12px; align-items:flex-start; margin:22px 0 0; font-size:14.5px; font-weight:500; line-height:1.6; color:var(--body); cursor:pointer;}
+label.agree input{flex:0 0 auto; width:20px; height:20px; margin-top:2px; accent-color:var(--green); cursor:pointer;}
+label.agree a, .content .formnote a, .tintcard a{color:var(--green); font-weight:700; text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap navin">
+  <a class="brand" href="/"><div class="mark"></div>RunCalendar</a>
+  <div class="navlinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/guides/">Race guides</a><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a class="navcta" href="/#download">Get the app</a></div>
+</div></nav>
+
+<div class="pagehead wrap">
+  <h1>Your race,<br><span class="g">in photos.</span></h1>
+  <p class="sub">Add two to four race-day photographs to your event's page in the RunCalendar app and on runcalendar.com, at no cost.</p>
+</div>
+
+<div class="content">
+  <form id="f" novalidate>
+    <input type="hidden" name="terms_version" value="1">
+
+    <label>Which events?</label>
+    <textarea name="events" maxlength="2000" placeholder="Your event's name as it appears in RunCalendar…" required></textarea>
+    <div class="hint">For a series, list each event. One agreement covers them all.</div>
+
+    <label>Your name</label>
+    <input type="text" name="contact_name" maxlength="120" required>
+
+    <label>Your role</label>
+    <input type="text" name="role" maxlength="120" placeholder="e.g. Race director, event manager, club president" required>
+
+    <label>Email</label>
+    <input type="email" name="email" maxlength="200" required>
+
+    <div class="rules"><b>Photo guidelines</b>
+      <ul>
+        <li>Two to four photographs per event, taken on race day or on the course.</li>
+        <li>You hold the rights to each photograph, or have the photographer's permission to share it.</li>
+        <li>Photographs must be free of logos, text, watermarks and promotional graphics.</li>
+        <li>Groups and crowds are welcome. No individual should be the main subject without their consent, and no child should be the main subject.</li>
+        <li>RunCalendar selects, crops and credits each photograph to your event, and removes any photograph within 7 days of your request.</li>
+        <li>Landscape photographs (wider than tall) of at least 2,000 pixels on the long side are preferred. Real photographs only: no graphics, collages or AI-generated images.</li>
+      </ul>
+    </div>
+
+    <label class="agree"><input type="checkbox" name="agree" required><span>I have read and agree to the <a href="/photo-terms/" target="_blank" rel="noopener">RunCalendar Photo Terms</a>, and I confirm that the photographs I submit meet these guidelines.</span></label>
+
+    <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off"><!-- honeypot -->
+
+    <button class="submit" type="submit" id="sbtn">Agree and submit</button>
+    <div class="formnote" id="ferr" style="display:none; color:#B3261E; font-weight:700;"></div>
+    <div class="formnote">Once you have agreed, email your photographs, or a link to them, to <a href="mailto:team@runcalendar.com">team@runcalendar.com</a>, noting the event each one belongs to.</div>
+  </form>
+  <div class="tintcard" id="fok" style="display:none; font-size:16px;">
+    <b>Thank you. Your agreement is recorded.</b> Please email your photographs, or a link to them, to <a href="mailto:team@runcalendar.com">team@runcalendar.com</a>, noting the event each one belongs to. We have also sent these instructions to your email address.
+  </div>
+</div>
+
+<footer><div class="wrap fin">
+  <div>© 2026 RunCalendar · Net Project Limited</div>
+  <div class="flinks"><a href="/races/">Races</a><a href="/collections/">Collections</a><a href="/guides/">Race guides</a><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/add-event/">Add your event</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div>
+</div></footer>
+
+<script>
+(function(){
+  var SB='https://rteqvslwxgsgvccrgtzg.supabase.co/functions/v1/website-forms';
+  var ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0ZXF2c2x3eGdzZ3ZjY3JndHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM2NDExOTUsImV4cCI6MjA1OTIxNzE5NX0.9nS2ATC2p2bfruWNhKylrIPamtYfnb6hTSyv5GC5Ksw';
+  var H={'Authorization':'Bearer '+ANON,'apikey':ANON};
+  var LABEL='Agree and submit';
+
+  var f=document.getElementById('f'), btn=document.getElementById('sbtn'), err=document.getElementById('ferr');
+  function fail(m){ err.textContent=m; err.style.display='block'; btn.disabled=false; btn.textContent=LABEL; }
+  f.addEventListener('submit', async function(e){
+    e.preventDefault(); err.style.display='none';
+    if(!f.reportValidity || f.reportValidity()){
+      btn.disabled=true; btn.textContent='Sending…';
+      var data=Object.fromEntries(new FormData(f).entries()); data.form='photos';
+      try{
+        var r=await fetch(SB,{method:'POST',headers:Object.assign({'Content-Type':'application/json'},H),body:JSON.stringify(data)});
+        var j=await r.json();
+        if(r.ok&&j.ok){ f.style.display='none'; document.getElementById('fok').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); }
+        else fail(j.error||'Something went wrong. Please try again.');
+      }catch(_){ fail('There was a network problem. Please try again, or email team@runcalendar.com.'); }
+    }
+  });
+})();
+</script>
+</body>
+</html>
