@@ -47,6 +47,7 @@
 .foot .claim a{color:var(--secondary);font-weight:600;text-decoration:none}
 .foot .site{display:inline-block;margin-top:14px;font-size:15px;font-weight:700;color:var(--greenDeep);text-decoration:none}
 .fine{font-size:12.5px;color:var(--muted);margin-top:22px!important}
+.fine.credit{margin-top:8px!important}.fine a{color:var(--secondary);font-weight:600;text-decoration:none}
 .trust{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--muted);margin-top:14px;line-height:1.5}
 .trust .dot{width:8px;height:8px;border-radius:99px;background:var(--green);flex:none}
 .trust .dot.n{background:var(--disabled,#A3A39D)}

@@ -420,6 +420,16 @@ def cta(token, line="Save any of these to your season in RunCalendar and hear th
 FINE = ("Every race here is published by its organiser; RunCalendar checks the date and the entry window against the organiser's own page and rebuilds this calendar every night. "
         "A confirmed date shows its day; a provisional one shows only its month. Last updated " + TODAY.strftime("%-d %B %Y") + ".")
 
+# A local partner's credit: ONE grey line under the fine print of a region hub, keyed by the hub's path. Nowhere else
+# (race pages, month lists, the app stay untouched; no names or logos in the app). First and only: New Jersey, the
+# Shop Your County link swap (owner decision 2026-11-26: all three of their links, one line; they publish a race
+# roundup linking to /races/us/new-jersey/ and the App Store with ct=shop-your-county). Judge on that campaign.
+CREDITS = {
+    "/races/us/new-jersey/": 'Local news and things to do across New Jersey: <a href="https://shopyourcounty.com/nj/">Shop Your County</a>, '
+                             'with its own guides to <a href="https://shopmorriscounty.com">Morris County</a> and '
+                             '<a href="https://shopsussexcounty.com">Sussex County</a>.',
+}
+
 def collection_cards(cols, code, by_id):
     mine = [c for c in cols if c.get("countries") and code in c["countries"]]
     glob = [c for c in cols if not c.get("countries")]
@@ -473,6 +483,7 @@ def hub_page(path, crumbs, eyebrow, h1, sub, placeholder, index_url, hero_img, h
   {cta(token)}
 
   <p class="fine">{FINE}</p>
+  {f'<p class="fine credit">{CREDITS[path]}</p>' if path in CREDITS else ''}
 </div>
 {SEARCH_JS}
 """ + FOOT
